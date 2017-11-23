@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+
+<html class="dj_webkit dj_contentbox">
+<head>
+
+  <title>USDA/NASS QuickStats Ad-hoc Query Tool</title>
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+  <style type="text/css">
+
+/*Load and needed .css files here */
+
+@import "/dojo/dojo/resources/dojo.css";
+@import "/dojo/dijit/themes/tundra/tundra.css";
+@import "/dojo/dijit/tests/css/dijitTests.css";
+@import "/dojo/dojox/grid/resources/tundraGrid.css";
+@import "/dojo/dojox/grid/_grid/Grid.css";
+@import "/dojo/dojox/grid/_grid/tundraGrid.css";
+
+
+.tundra .dojoxGridRowOdd {
+background-color:#EEEEEE;
+}
+
+#mainbody {
+  background-color : #ffffff;
+}
+
+#contentbody {
+  background-color : #ffffff;
+  position: absolute;
+    top: 0px;
+    right:22px;
+    left: 22px;
+   bottom: 40px;
+
+}
+
+
+#printbody {
+  background-color : #ffffff;
+  height: 100%;
+
+}
+
+
+#indexbody {
+  background-color : #ffffff;
+  /*height:650px;*/
+
+  position: fixed;
+  /*nice solution but creates horzontal scrholl always.*/
+
+  overflow: auto;
+  top: 87px;
+  right:22px;
+  left: 22px;
+  bottom: 97px;
+}
+
+.report{
+position:relative;
+display:block;
+}
+
+.reportChart{
+display:block;
+float:right;
+position:static;
+margin-right:20px;
+margin-top:60px;
+border: 0px solid #808292;
+}
+.reportTitle{
+padding: 20px;
+text-align : center;
+font-weight : bold;
+color : #646464;
+font-size : 22px;
+text-decoration:underline;
+}
+.reportBody{
+padding: 10px;
+text-align : center;
+font-size : 14px;
+}
+
+#login_signin{
+display:inline;
+position:absolute;
+right:20px;
+top:20px;
+border: 1px solid #808292;
+text-align:right;width:30%;
+}
+
+#header_signin{
+padding:5px;
+text-align: center;
+color:white;
+background-color: #808292;
+border: 1px solid #808292;
+font-size : 17px;
+font-weight : bold;
+}
+
+#controls {
+padding : 6px 0;
+}
+#controls button {
+margin-left : 10px;
+}
+
+#header {
+background-color : #ffffff;
+}
+
+#bodyheader {
+  height: 35px;
+  background-color: #336699;
+  margin-top: 0px;
+  margin-left: 10px;
+
+/*background-image : url('/static/images/header.gif');
+background-repeat : no-repeat;
+
+background-position : bottom left;*/
+
+}
+
+#bodytitle11 {
+  font-size:25px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:lighter;
+  #position: fixed;
+  position: absolute;
+  vertical-align: middle;
+  margin-left: 10px;
+  height: 35px;
+  color: #fff;
+
+}
+
+#bodytitle {
+  font-size:24px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:lighter;
+  #position: fixed;
+  position: absolute;
+  display:inline;
+  margin-left: 10px;
+  line-height: 27px;
+  padding-top:4px;
+  color: #fff;
+}
+
+
+#leftheaderimg {
+float : left;
+width : 100px;
+}
+#menu {
+background-color : #777b88;
+text-transform : capitalize;
+height : 23px;
+border-bottom : 1px solid transparent;
+border-top : 1px solid transparent;
+}
+#menu div.inactive {
+border-bottom : 1px solid transparent;
+border-top : 1px solid transparent;
+color : #efefef;
+margin-left : 1px;
+margin-right : 1px;
+text-align : center;
+float : left;
+width : 180px;
+}
+#menu div.inactive:hover {
+color : #000;
+}
+#menu ul {
+text-align : center;
+}
+#menu li.inactive {
+border-bottom : 1px solid transparent;
+border-top : 1px solid transparent;
+color : #efefef;
+margin : 0;
+text-align : center;
+width : 200px;
+float : left;
+}
+#menu li.inactive:hover {
+color : #101010;
+}
+.menuLink {
+background : transparent;
+border : medium none;
+color : #f0f0f0;
+font-weight : bolder;
+text-align : center;
+text-decoration : none;
+text-transform : capitalize;
+width : 100%;
+margin-right : 25px;
+margin-left : 25px;
+min-width : 128px;
+}
+.menuLink:hover {
+background-color : #e0e6ff;
+border : 0 solid #101010;
+color : #0f0f0f;
+}
+.textBox {
+color : black;
+background-color : #ffffff;
+border : 1px black;
+font-weight : bolder;
+margin : 0;
+padding : 0 3px;
+padding-top : 2px;
+text-align : left;
+text-decoration : none;
+width : 100%;
+}
+.menuSeparator {
+float : left;
+border-bottom : 1px solid transparent;
+border-top : 1px solid transparent;
+background-color : #777b88;
+color : #f0f0f0;
+font-weight : bolder;
+text-align : center;
+text-decoration : none;
+width : 2px;
+margin-left : 1px;
+margin-right : 1px;
+}
+
+.selectTable {
+background-color : #ffffff;
+padding : 18px;
+padding-right : 0;
+padding-top:0;
+}
+
+.selectHeader {
+clear : left;
+margin:0;
+padding:0;
+}
+
+.selectGroup {
+padding-left : 0px;
+min-width : 120px;
+display : block;
+float : left;
+text-align : left;
+margin-left : 10px;
+margin-right : 5px;
+font-size : 12px;
+}
+
+.selectLabel {
+position : relative;
+font-weight : bold;
+padding : 1px;
+font-size : 12px;
+}
+
+.contextHelp {
+  font-weight : normal;
+border:2px solid #336699;
+z-index: 1;
+position:relative;
+width:750px;
+height:350px;
+padding:5px;
+overflow:auto;
+background:#FFF;
+display:none;
+}
+.selectLabelMenu {
+display : inline;
+position : absolute;
+right : 0;
+font-weight : normal;
+padding : 5px;
+font-size : 9px;
+}
+
+.selectOption {
+font-size : 11px;
+/*font-weight: bold;*/
+}
+
+p.download {
+  margin:0px;
+  margin-top:10px;
+  border: 0px solid #000;
+  display:inline;
+  text-align:center;
+  position : absolute;
+  right : 0px;
+  height:20px;
+  font-weight : normal;
+  padding-top : 4px;
+  padding-right : 10px;
+  font-size : 12px;
+}
+
+a.download{
+   text-decoration:none;
+   color:#336699;
+}
+
+.search{
+float:right;
+display:inline-block;
+border: 0px #A00 solid;
+padding:5px;
+
+}
+
+#footer {
+background-color : #ffffff;
+color : #46494c;
+text-align : center;
+border-top : 1px solid #46494c;
+width : 95%;
+padding : 4px 0;
+margin : 0;
+}
+h2.title {
+background-color : #ffffff;
+color : #46494c;
+text-align : center;
+border-top : 1px solid #46494c;
+border-bottom : 1px solid #46494c;
+padding : 4px 0;
+width : 95%;
+margin : 0;
+}
+.message {
+  color : #cc4444;
+  padding : 3px;
+  font-weight : normal;
+  font-size : 12px;
+  position: fixed;
+  left: 240px;
+  top: 95px;
+  right: 321px;
+}
+.error {
+color : #cc4444;
+}
+div.formdiv {
+height : 25px;
+float : right;
+}
+.subheading {
+  /*width:100%;*/
+  height:23px;
+  border-style:none none solid none ;
+  border-width:0px 0px 1px 0px;
+  /*border-color:#666666*/;
+  border-color:#999;
+  margin-top:10px;
+  margin-left:0px;
+  line-height:23px;
+  font-size:15px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:bold;
+  margin-bottom:10px;
+  width : 440px;
+  display:inline;
+  float : left;
+  z-index : 1;
+ }
+
+.chkbox {
+  height:auto;
+  border-style:none none solid none ;
+  border-width:0px 0px 1px 0px;
+  border-color:#666666;
+  margin-left:10px;
+  line-height:23px;
+  font-size:10px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:bold;
+  margin-bottom:10px;
+  width : auto;
+  display:inline;
+  float : left;
+  z-index : 1;
+ }
+
+.lessersubheading {
+  width:100%;
+  height:23px;
+  border-style:none none solid none ;
+  border-width:0px 0px 1px 0px;
+  #border-color:#666666;
+  border-color:#ccc;
+  margin-top:10px;
+  margin-left:30px;
+  line-height:23px;
+  font-size:12px;
+  font-family:Arial, Helvetica, sans-serif;
+  font-weight:bold;
+  margin-bottom:10px;
+  width : 410px;
+  display:inline;
+  float : left;
+  z-index : 1;
+ }
+
+
+.subheading-left {
+left : -10px;
+padding-top : 8px;
+padding-right : 8px;
+display : block;
+position : relative;
+z-index : 1;
+border : 1px solid #000;
+height : 28px;
+text-align : right;
+font-weight : normal;
+color : #646464;
+font-size : 12px;
+text-decoration : none;
+}
+.subheading-left a {
+font-weight : normal;
+color : #646464;
+font-size : 12px;
+text-decoration : none;
+}
+.subheading-left a:hover {
+font-weight : bold;
+color : #000;
+font-size : 14px;
+text-decoration : none;
+}
+.chart {
+position : relative;
+display : inline;
+margin : 0;
+}
+#getChart {
+margin-bottom : 28px;
+}
+#ChartDiv {
+float : left;
+width : 595px;
+height:300px;
+margin : 0;
+left : 0;
+font-size : 13px;
+padding : 0;
+}
+#ChartSubLeft {
+font-weight : bold;
+color : #336699;
+float : left;
+width : 300px;
+text-align : left;
+}
+#ChartSubRight {
+font-weight : normal;
+color : #808080;
+font-size : 10px;
+float : left;
+width : 100px;
+text-align : right;
+}
+#ChartSubRight a {
+font-weight : normal;
+padding-top:10px;
+color : #336699;
+font-size : 10px;
+text-decoration : none;
+}
+#ChartSubRight a:hover {
+font-weight : bold;
+color : #000;
+font-size : 10px;
+text-decoration : none;
+}
+
+#NavHistoryContainer {
+margin-left:12px;
+margin-top:10px;
+font-size : 10px;
+float : left;
+display : inline;
+color : #336699;
+}
+
+#NavHistoryDiv {
+font-weight : normal;
+margin-top:10px;
+color : #808080;
+font-size : 10px;
+float : left;
+display : inline;
+/*margin : 0px;*/
+
+}
+
+#NavHistoryDiv a {
+font-weight : normal;
+color : #336699;
+font-size : 11px;
+font-weight : normal;
+text-decoration : none;
+vertical-align:center;
+}
+
+#NavHistoryDiv a:hover {
+font-weight : normal;
+color : #000;
+font-size : 11px;
+text-decoration : none;
+}
+
+
+#status {
+font-weight : normal;
+color : #FFFFFF;
+font-weight:bolder;
+font-size : 12px;
+float : right;
+position:static;
+padding-left: 20px;
+#padding-left: 0px;
+padding-top: 0px;
+margin-top:5px;
+border : solid 1px;
+border-color: #666666;
+background-color: #666666;
+width:220px;
+margin-right:5px;
+
+}
+
+
+#status_go {
+font-weight : normal;
+color : #green;
+font-size : 12px;
+display : inline;
+float:right;
+
+width:150px;
+padding-left: 10px;
+#padding-left: 10px;
+background-color: #FFFFFF;
+
+}
+
+
+#rCounts {
+font-weight : normal;
+color : #000000;
+font-size : 12px;
+float : right;
+display : inline;
+border-top : solid 1px;
+border-color: #336699;
+width:220px;
+#width:200px;
+padding-left: 15px;
+padding-right: 5px;
+padding-bottom: 8px;
+#padding-bottom: 8px;
+padding-top: 8px;
+#padding-top: 8px;
+background-color: #FFFFFF;
+}
+
+#notice {
+font-weight : normal;
+color : #FFFFFF;
+font-weight:bolder;
+font-size : 12px;
+top:120px;
+right: 0px;
+position:absolute;
+padding-left: 20px;
+#padding-left: 0px;
+padding-top: 0px;
+margin-top:5px;
+border : solid 1px;
+border-color: #666666;
+background-color: #666666;
+width:500px;
+margin-right:5px;
+
+}
+#notice_go {
+font-weight : normal;
+color : #green;
+font-size : 12px;
+display : inline;
+float:right;
+
+width:430px;
+padding-left: 10px;
+#padding-left: 10px;
+background-color: #FFFFFF;
+
+}
+
+#rNotice {
+font-weight : normal;
+color : #000000;
+font-size : 12px;
+float : right;
+display : inline;
+border-top : solid 1px;
+border-color: #336699;
+width:500px;
+#width:480px;
+padding-left: 15px;
+padding-right: 5px;
+padding-bottom: 8px;
+#padding-bottom: 8px;
+padding-top: 8px;
+#padding-top: 8px;
+background-color: #FFFFFF;
+}
+
+#searchHints {
+padding-left:10px;
+color : #336699;
+text-decoration:underline;
+display:inline;
+cursor:pointer;
+}
+
+#closeSearchHints {
+padding-right:10px;
+color : #336699;
+text-decoration:underline;
+display:inline;
+float:right;
+cursor:pointer;
+}
+
+#hintsDiv {
+border:2px solid #336699;
+z-index: 1;
+position:absolute;
+top:72px;
+width:300px;
+height:350px;
+padding:5px;
+overflow:auto;
+background:#FFF;
+display:none;
+}
+
+#searchDiv {
+font-weight : normal;
+color : #000000;
+font-size : 12px;
+float : right;
+display : inline;
+padding-right:20px;
+border-color: #336699;
+padding-left: 15px;
+#padding-left: 0px;
+padding-right: 15px;
+padding-bottom: 5px;
+padding-top: 20px;
+background-color: #FFFFFF;
+margin-right:20px;
+margin-top:5px;
+}
+
+#onScreenHelp {
+font-weight : normal;
+margin-top:0px;
+color : #000000;
+font-size : 12px;
+float : right;
+display : inline;
+border: solid 0px;
+margin-left:10px;
+padding: 5px;
+border : solid 0px;
+border-color: #336699;
+
+}
+
+#saveUuid {
+  border:2px solid #336699;
+  z-index: 10;
+  position:absolute;
+  top:150px;
+  right:50px;
+  width:350px;
+  height:200px;
+  padding:15px;
+  overflow:auto;
+  background:#FFF;
+  display:none;
+}
+
+
+.nav {
+display : inline;
+}
+
+.map {
+position : relative;
+display : inline;
+margin : 5px;
+}
+
+#getMap {
+position : relative;
+margin-bottom : 28px;
+z-index : -1;
+}
+
+#MapDiv {
+float : left;
+width : 545px;
+bottom : -28px;
+z-index : 1;
+}
+
+#MapSubLeft {
+font-weight : bold;
+color : #808080;
+float : left;
+width : 200px;
+text-align : left;
+}
+
+#MapSubRight {
+font-weight : normal;
+color : #808080;
+font-size : 10px;
+float : left;
+width : 75px;
+text-align : right;
+}
+
+#MapSubRight a {
+font-weight : normal;
+color : #808080;
+font-weight : bold;
+font-size : 10px;
+text-decoration : none;
+}
+
+#MapSubRight a:hover {
+font-weight : bold;
+color : #000;
+font-size : 10px;
+text-decoration : none;
+}
+
+#DataContainer {
+margin : 28px;
+}
+
+.spinner {
+position : absolute;
+z-index : 10;
+padding : 20px;
+}
+
+#menuOuter {
+border : 0 solid #aaa;
+display : block;
+width : 100%;
+background-color : #fff;
+font-weight : bold;
+}
+
+#menu2 {
+border : 0 solid #000;
+position : absolute;
+right : 20px;
+display : inline;
+}
+
+.menu2-button-far-left {
+display : inline;
+float : left;
+}
+
+.menu2-button-far-left:hover {
+display : inline;
+float : left;
+padding-left : 3px;
+}
+
+.menu2-button-left {
+display : inline;
+float : left;
+padding-left : 3px;
+}
+
+.menu2-button-left:hover {
+display : inline;
+float : left;
+padding-left : 3px;
+}
+
+.menu2-button-far-right {
+display : inline;
+float : left;
+}
+
+.menu2-button-far-right:hover {
+float : left;
+}
+.menu2-button-right {
+display : inline;
+float : left;
+}
+
+.menu2-button-right:hover {
+display : inline;
+float : left;
+}
+
+input.menu2Link {
+  border : 1px solid #fff;
+}
+
+.menu2Link {
+background-color : transparent;
+height : 25px;
+border : 0 solid #a00;
+color : #FFFFFF;
+font-weight : bold;
+text-align : center;
+text-decoration : none;
+text-transform : capitalize;
+padding-right : 5px;
+padding-left : 5px;
+padding-bottom: 0px;
+margin-top:11px;
+#margin-top:12px;
+margin-right:5px;
+bottom:0px;
+}
+.menu2Link:hover {
+background-color : #FFF;
+border : 0 solid #101010;
+color : #336699;
+}
+
+.clearRight { /* generic container (i.e. div) for floating buttons */
+	overflow: hidden;
+	width: 100%;
+    float : right;
+
+}
+
+
+.clear { /* generic container (i.e. div) for floating buttons */
+  padding: 13px;
+  position: fixed;
+  border-top: 2px solid #336699;
+  margin-left: 10px;
+  right:22px;
+  /*left:22px;*/
+  left:12px;
+  bottom: 40px;
+  background-color:#FFFFFF;
+}
+
+
+
+ol li {
+list-style-image : none;
+list-style-position : outside;
+list-style-type : none;
+}
+.sm li {
+margin : 0;
+}
+.gl, #bsf a, .nobr, #brs a {
+white-space : nowrap;
+}
+#mbEnd .med {
+white-space : normal;
+}
+.sl, .r {
+display : inline;
+font-weight : normal;
+margin : 0;
+}
+.r {
+font-size : medium;
+}
+h4.r {
+font-size : small;
+}
+.g {
+margin : 1em 0;
+}
+em {
+font-style : normal;
+font-weight : bold;
+}
+em, b {
+text-decoration : inherit;
+}
+.a, cite, .cite, .cite:link {
+color : green;
+font-style : normal;
+}
+
+  </style>
+
+<body class="tundra" style="background-image:none; padding: 0px 20px 20px 20px;">
+
+    <div class="selectHeader">
+                    <div class="subheading">
+                        <!--
+                        Select Commodity (select one or more) <div id="Commodityhelp" style="float:right" ><img onclick="toggleHelp('Commodity_help');" height="20px" width="20px" src="/static/images/help-icon.png"></div>
+                        -->
+                        Select Commodity
+                   </div>
+                   <br clear="all">
+    </div>
+    <div id="source_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="source_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );">
+                     <div class="selectLabel">Program: </div>
+                     <div id="source_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="source_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );" -->
+                          <select id="source_desc" name="source_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+                              <option value="CENSUS">CENSUS</option><option value="SURVEY">SURVEY</option></select>
+                     </div>
+        <form action="ClassName.submitSD" id="sdform" data-bind="true">
+         <input type="text" id="source_desc_input" name="name">
+         <input type="submit" value="Submit source_desc" id="source_desc_submit">
+        </form>
+                </div>
+    <div id="sector_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="sector_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('sector_desc') );">
+                     <div class="selectLabel">Sector: </div>
+                     <div id="sector_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="sector_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('sector_desc') );" -->
+                          <select id="sector_desc" name="sector_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="ANIMALS &amp; PRODUCTS">ANIMALS &amp; PRODUCTS</option><option value="CROPS">CROPS</option><option value="DEMOGRAPHICS">DEMOGRAPHICS</option><option value="ECONOMICS">ECONOMICS</option><option value="ENVIRONMENTAL">ENVIRONMENTAL</option></select>
+                     </div>
+        <form action="ClassName.submitSecD" id="secdform" data-bind="true">
+         <input type="text" id="sector_desc_input" name="name">
+         <input type="submit" value="Submit sector_desc" id="sector_desc_submit">
+        </form>
+                </div>
+    <div id="group_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="group_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('group_desc') );">
+                     <div class="selectLabel">Group: </div>
+                     <div id="group_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="group_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('group_desc') );" -->
+                          <select id="group_desc" name="group_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="ANIMAL TOTALS">ANIMAL TOTALS</option><option value="AQUACULTURE">AQUACULTURE</option><option value="CROP TOTALS">CROP TOTALS</option><option value="DAIRY">DAIRY</option><option value="ENERGY">ENERGY</option><option value="EXPENSES">EXPENSES</option><option value="FARMS &amp; LAND &amp; ASSETS">FARMS &amp; LAND &amp; ASSETS</option><option value="FIELD CROPS">FIELD CROPS</option><option value="FRUIT &amp; TREE NUTS">FRUIT &amp; TREE NUTS</option><option value="HORTICULTURE">HORTICULTURE</option><option value="INCOME">INCOME</option><option value="IRRIGATION">IRRIGATION</option><option value="LIVESTOCK">LIVESTOCK</option><option value="OPERATORS">OPERATORS</option><option value="POULTRY">POULTRY</option><option value="PRICES PAID">PRICES PAID</option><option value="SPECIALTY">SPECIALTY</option><option value="VEGETABLES">VEGETABLES</option></select>
+                     </div>
+        <form action="ClassName.submitGP" id="gpform" data-bind="true">
+         <input type="text" id="group_desc_input" name="name">
+         <input type="submit" value="Submit group_desc" id="group_desc_submit">
+        </form>
+                </div>
+    <div id="commodity_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="commodity_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('commodity_desc') );">
+                     <div class="selectLabel">Commodity: </div>
+                     <div id="commodity_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="commodity_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('commodity_desc') );" -->
+                          <select id="commodity_desc" name="commodity_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="AG LAND">AG LAND</option><option value="AG SERVICES">AG SERVICES</option><option value="AG SERVICES &amp; RENT">AG SERVICES &amp; RENT</option><option value="ALCOHOL COPRODUCTS">ALCOHOL COPRODUCTS</option><option value="ALMONDS">ALMONDS</option><option value="ALPACAS">ALPACAS</option><option value="AMARANTH">AMARANTH</option><option value="ANIMAL PRODUCTS, OTHER">ANIMAL PRODUCTS, OTHER</option><option value="ANIMAL SECTOR">ANIMAL SECTOR</option><option value="ANIMAL TOTALS">ANIMAL TOTALS</option><option value="ANIMALS, OTHER">ANIMALS, OTHER</option><option value="APPLES">APPLES</option><option value="APRICOTS">APRICOTS</option><option value="AQUACULTURE TOTALS">AQUACULTURE TOTALS</option><option value="AQUACULTURE, OTHER">AQUACULTURE, OTHER</option><option value="AQUATIC PLANTS">AQUATIC PLANTS</option><option value="ARTICHOKES">ARTICHOKES</option><option value="ASPARAGUS">ASPARAGUS</option><option value="ASSETS">ASSETS</option><option value="AUTOS">AUTOS</option><option value="AVOCADOS">AVOCADOS</option><option value="BAITFISH">BAITFISH</option><option value="BANANAS">BANANAS</option><option value="BAREROOT HERBACEOUS PERENNIALS">BAREROOT HERBACEOUS PERENNIALS</option><option value="BARLEY">BARLEY</option><option value="BEANS">BEANS</option><option value="BEDDING PLANT TOTALS">BEDDING PLANT TOTALS</option><option value="BEDDING PLANTS, ANNUAL">BEDDING PLANTS, ANNUAL</option><option value="BEDDING PLANTS, HERBACEOUS PERENNIAL">BEDDING PLANTS, HERBACEOUS PERENNIAL</option><option value="BEEF">BEEF</option><option value="BEESWAX">BEESWAX</option><option value="BEETS">BEETS</option><option value="BERRIES, OTHER">BERRIES, OTHER</option><option value="BERRY TOTALS">BERRY TOTALS</option><option value="BISON">BISON</option><option value="BLACKBERRIES">BLACKBERRIES</option><option value="BLUEBERRIES">BLUEBERRIES</option><option value="BOYSENBERRIES">BOYSENBERRIES</option><option value="BROCCOLI">BROCCOLI</option><option value="BRUSSELS SPROUTS">BRUSSELS SPROUTS</option><option value="BUCKWHEAT">BUCKWHEAT</option><option value="BUILDING MATERIALS">BUILDING MATERIALS</option><option value="BULBS &amp; CORMS &amp; RHIZOMES &amp; TUBERS">BULBS &amp; CORMS &amp; RHIZOMES &amp; TUBERS</option><option value="BUSINESS ACTIVITY">BUSINESS ACTIVITY</option><option value="BUTTER">BUTTER</option><option value="BUTTERMILK">BUTTERMILK</option><option value="CABBAGE">CABBAGE</option><option value="CACTI &amp; SUCCULENTS">CACTI &amp; SUCCULENTS</option><option value="CAKE &amp; MEAL">CAKE &amp; MEAL</option><option value="CAMELINA">CAMELINA</option><option value="CANEBERRIES">CANEBERRIES</option><option value="CANOLA">CANOLA</option><option value="CARROTS">CARROTS</option><option value="CATTLE">CATTLE</option><option value="CAULIFLOWER">CAULIFLOWER</option><option value="CCC LOANS">CCC LOANS</option><option value="CELERY">CELERY</option><option value="CHEESE">CHEESE</option><option value="CHEMICAL TOTALS">CHEMICAL TOTALS</option><option value="CHEMICALS, OTHER">CHEMICALS, OTHER</option><option value="CHERRIES">CHERRIES</option><option value="CHESTNUTS">CHESTNUTS</option><option value="CHICKENS">CHICKENS</option><option value="CHICORY">CHICORY</option><option value="CHUKARS">CHUKARS</option><option value="CITRUS TOTALS">CITRUS TOTALS</option><option value="CITRUS, OTHER">CITRUS, OTHER</option><option value="COFFEE">COFFEE</option><option value="COMMODITY TOTALS">COMMODITY TOTALS</option><option value="COMPUTERS">COMPUTERS</option><option value="CONSUMER PRICE INDEX">CONSUMER PRICE INDEX</option><option value="CORN">CORN</option><option value="COTTON">COTTON</option><option value="CRAMBE">CRAMBE</option><option value="CRANBERRIES">CRANBERRIES</option><option value="CREAM">CREAM</option><option value="CROP SECTOR">CROP SECTOR</option><option value="CROP TOTALS">CROP TOTALS</option><option value="CROPS, OTHER">CROPS, OTHER</option><option value="CRUDE PINE GUM">CRUDE PINE GUM</option><option value="CRUSTACEANS">CRUSTACEANS</option><option value="CUCUMBERS">CUCUMBERS</option><option value="CURRANTS">CURRANTS</option><option value="CUT CHRISTMAS TREES">CUT CHRISTMAS TREES</option><option value="CUT CHRISTMAS TREES &amp; SHORT TERM WOODY CROPS">CUT CHRISTMAS TREES &amp; SHORT TERM WOODY CROPS</option><option value="CUT CULTIVATED GREENS">CUT CULTIVATED GREENS</option><option value="CUT FLOWERS">CUT FLOWERS</option><option value="CUT FLOWERS &amp; CUT CULTIVATED GREENS">CUT FLOWERS &amp; CUT CULTIVATED GREENS</option><option value="DAIKON">DAIKON</option><option value="DAIRY PRODUCT TOTALS">DAIRY PRODUCT TOTALS</option><option value="DAIRY PRODUCTS, OTHER">DAIRY PRODUCTS, OTHER</option><option value="DATES">DATES</option><option value="DEBT">DEBT</option><option value="DECIDUOUS FLOWERING TREES">DECIDUOUS FLOWERING TREES</option><option value="DECIDUOUS SHADE TREES">DECIDUOUS SHADE TREES</option><option value="DECIDUOUS SHRUBS">DECIDUOUS SHRUBS</option><option value="DEER">DEER</option><option value="DEPRECIATION">DEPRECIATION</option><option value="DILL">DILL</option><option value="DUCKS">DUCKS</option><option value="EGGPLANT">EGGPLANT</option><option value="EGGS">EGGS</option><option value="ELK">ELK</option><option value="EMMER &amp; SPELT">EMMER &amp; SPELT</option><option value="EMUS">EMUS</option><option value="ENERGY">ENERGY</option><option value="EQUINE">EQUINE</option><option value="ESCAROLE &amp; ENDIVE">ESCAROLE &amp; ENDIVE</option><option value="EVERGREENS, BROADLEAF">EVERGREENS, BROADLEAF</option><option value="EVERGREENS, CONIFEROUS">EVERGREENS, CONIFEROUS</option><option value="EXPENSE TOTALS">EXPENSE TOTALS</option><option value="EXPENSES, OTHER">EXPENSES, OTHER</option><option value="FACILITIES &amp; EQUIPMENT">FACILITIES &amp; EQUIPMENT</option><option value="FARM OPERATIONS">FARM OPERATIONS</option><option value="FARM SECTOR">FARM SECTOR</option><option value="FEED">FEED</option><option value="FEED GRAINS">FEED GRAINS</option><option value="FEED GRAINS &amp; HAY">FEED GRAINS &amp; HAY</option><option value="FEED PRICE RATIO">FEED PRICE RATIO</option><option value="FERTILIZER &amp; CHEMICAL TOTALS">FERTILIZER &amp; CHEMICAL TOTALS</option><option value="FERTILIZER TOTALS">FERTILIZER TOTALS</option><option value="FERTILIZER, MIXED">FERTILIZER, MIXED</option><option value="FERTILIZER, OTHER">FERTILIZER, OTHER</option><option value="FIELD CROP TOTALS">FIELD CROP TOTALS</option><option value="FIELD CROPS, OTHER">FIELD CROPS, OTHER</option><option value="FIELDWORK">FIELDWORK</option><option value="FIGS">FIGS</option><option value="FLAXSEED">FLAXSEED</option><option value="FLORICULTURE TOTALS">FLORICULTURE TOTALS</option><option value="FLORICULTURE, OTHER">FLORICULTURE, OTHER</option><option value="FLOUR">FLOUR</option><option value="FLOWER SEEDS">FLOWER SEEDS</option><option value="FLOWERING PLANTS, POTTED">FLOWERING PLANTS, POTTED</option><option value="FOLIAGE PLANTS">FOLIAGE PLANTS</option><option value="FOOD COMMODITIES">FOOD COMMODITIES</option><option value="FOOD CROP TOTALS">FOOD CROP TOTALS</option><option value="FOOD CROP, OTHER">FOOD CROP, OTHER</option><option value="FOOD FISH">FOOD FISH</option><option value="FOOD GRAINS">FOOD GRAINS</option><option value="FRUIT &amp; NUT PLANTS">FRUIT &amp; NUT PLANTS</option><option value="FRUIT &amp; TREE NUT TOTALS">FRUIT &amp; TREE NUT TOTALS</option><option value="FRUIT &amp; TREE NUTS, OTHER">FRUIT &amp; TREE NUTS, OTHER</option><option value="FRUIT TOTALS">FRUIT TOTALS</option><option value="FRUIT, OTHER">FRUIT, OTHER</option><option value="FUELS">FUELS</option><option value="FUMIGANTS">FUMIGANTS</option><option value="FUNGICIDES">FUNGICIDES</option><option value="FUNGICIDES &amp; OTHER">FUNGICIDES &amp; OTHER</option><option value="GARLIC">GARLIC</option><option value="GEESE">GEESE</option><option value="GINGER ROOT">GINGER ROOT</option><option value="GINSENG">GINSENG</option><option value="GOATS">GOATS</option><option value="GOOSEBERRIES">GOOSEBERRIES</option><option value="GOVT PROGRAMS">GOVT PROGRAMS</option><option value="GRAIN">GRAIN</option><option value="GRAIN STORAGE CAPACITY">GRAIN STORAGE CAPACITY</option><option value="GRAPEFRUIT">GRAPEFRUIT</option><option value="GRAPES">GRAPES</option><option value="GRASSES">GRASSES</option><option value="GRASSES &amp; LEGUMES TOTALS">GRASSES &amp; LEGUMES TOTALS</option><option value="GRASSES &amp; LEGUMES, OTHER">GRASSES &amp; LEGUMES, OTHER</option><option value="GREASE">GREASE</option><option value="GREENS">GREENS</option><option value="GROWING MEDIA">GROWING MEDIA</option><option value="GUAR">GUAR</option><option value="GUAVAS">GUAVAS</option><option value="GUINEAS">GUINEAS</option><option value="HAY">HAY</option><option value="HAY &amp; HAYLAGE">HAY &amp; HAYLAGE</option><option value="HAYLAGE">HAYLAGE</option><option value="HAZELNUTS">HAZELNUTS</option><option value="HERBICIDES">HERBICIDES</option><option value="HERBS">HERBS</option><option value="HOGS">HOGS</option><option value="HONEY">HONEY</option><option value="HOPS">HOPS</option><option value="HORSERADISH">HORSERADISH</option><option value="HORTICULTURE TOTALS">HORTICULTURE TOTALS</option><option value="HORTICULTURE, OTHER">HORTICULTURE, OTHER</option><option value="ICE CREAM">ICE CREAM</option><option value="IMPROVEMENT &amp; CONSTRUCTION">IMPROVEMENT &amp; CONSTRUCTION</option><option value="INCOME, FARM-RELATED">INCOME, FARM-RELATED</option><option value="INCOME, NET CASH FARM">INCOME, NET CASH FARM</option><option value="INSECTICIDES">INSECTICIDES</option><option value="INTEREST">INTEREST</option><option value="INTERNET">INTERNET</option><option value="JOJOBA">JOJOBA</option><option value="K-EARLY CITRUS">K-EARLY CITRUS</option><option value="KIWIFRUIT">KIWIFRUIT</option><option value="KUMQUATS">KUMQUATS</option><option value="LABOR">LABOR</option><option value="LAMB &amp; MUTTON">LAMB &amp; MUTTON</option><option value="LAND AREA">LAND AREA</option><option value="LANDLORDS">LANDLORDS</option><option value="LARD">LARD</option><option value="LEGUMES">LEGUMES</option><option value="LEMONS">LEMONS</option><option value="LENTILS">LENTILS</option><option value="LETTUCE">LETTUCE</option><option value="LIMES">LIMES</option><option value="LIVESTOCK TOTALS">LIVESTOCK TOTALS</option><option value="LLAMAS">LLAMAS</option><option value="LOGANBERRIES">LOGANBERRIES</option><option value="LOTUS ROOT">LOTUS ROOT</option><option value="MACADAMIAS">MACADAMIAS</option><option value="MACHINERY">MACHINERY</option><option value="MACHINERY TOTALS">MACHINERY TOTALS</option><option value="MACHINERY, OTHER">MACHINERY, OTHER</option><option value="MANGOES">MANGOES</option><option value="MAPLE SYRUP">MAPLE SYRUP</option><option value="MEAL">MEAL</option><option value="MELLORINE">MELLORINE</option><option value="MELONS">MELONS</option><option value="MILK">MILK</option><option value="MILLET">MILLET</option><option value="MILLFEED">MILLFEED</option><option value="MINK">MINK</option><option value="MINT">MINT</option><option value="MISCANTHUS">MISCANTHUS</option><option value="MOHAIR">MOHAIR</option><option value="MOLLUSKS">MOLLUSKS</option><option value="MUSHROOM SPAWN">MUSHROOM SPAWN</option><option value="MUSHROOMS">MUSHROOMS</option><option value="MUSTARD">MUSTARD</option><option value="NECTARINES">NECTARINES</option><option value="NITROGEN">NITROGEN</option><option value="NON-CITRUS FRUIT &amp; TREE NUTS TOTALS">NON-CITRUS FRUIT &amp; TREE NUTS TOTALS</option><option value="NON-CITRUS TOTALS">NON-CITRUS TOTALS</option><option value="NON-CITRUS, OTHER">NON-CITRUS, OTHER</option><option value="NONFARM SECTOR">NONFARM SECTOR</option><option value="NURSERY &amp; FLORICULTURE TOTALS">NURSERY &amp; FLORICULTURE TOTALS</option><option value="NURSERY TOTALS">NURSERY TOTALS</option><option value="NURSERY, OTHER">NURSERY, OTHER</option><option value="OATS">OATS</option><option value="OIL">OIL</option><option value="OIL-BEARING CROPS">OIL-BEARING CROPS</option><option value="OKRA">OKRA</option><option value="OLIVES">OLIVES</option><option value="ONIONS">ONIONS</option><option value="OPERATORS">OPERATORS</option><option value="OPERATORS, FIRST FOUR OPERATORS">OPERATORS, FIRST FOUR OPERATORS</option><option value="OPERATORS, PRINCIPAL">OPERATORS, PRINCIPAL</option><option value="OPERATORS, SECOND">OPERATORS, SECOND</option><option value="OPERATORS, THIRD">OPERATORS, THIRD</option><option value="ORANGES">ORANGES</option><option value="ORCHARDS">ORCHARDS</option><option value="ORNAMENTAL FISH">ORNAMENTAL FISH</option><option value="ORNAMENTAL GRASSES">ORNAMENTAL GRASSES</option><option value="OSTRICHES">OSTRICHES</option><option value="PACKING FACILITY">PACKING FACILITY</option><option value="PALMS">PALMS</option><option value="PAPAYAS">PAPAYAS</option><option value="PARSLEY">PARSLEY</option><option value="PARTRIDGES">PARTRIDGES</option><option value="PASSION FRUIT">PASSION FRUIT</option><option value="PASTURELAND">PASTURELAND</option><option value="PEACHES">PEACHES</option><option value="PEACHES &amp; NECTARINES">PEACHES &amp; NECTARINES</option><option value="PEAFOWL">PEAFOWL</option><option value="PEANUTS">PEANUTS</option><option value="PEARS">PEARS</option><option value="PEAS">PEAS</option><option value="PEAS &amp; CARROTS">PEAS &amp; CARROTS</option><option value="PEAS &amp; LENTILS">PEAS &amp; LENTILS</option><option value="PECANS">PECANS</option><option value="PEPPERS">PEPPERS</option><option value="PERSIMMONS">PERSIMMONS</option><option value="PHEASANTS">PHEASANTS</option><option value="PHOSPHATE">PHOSPHATE</option><option value="PICKLES">PICKLES</option><option value="PIGEONS &amp; SQUAB">PIGEONS &amp; SQUAB</option><option value="PIMIENTOS">PIMIENTOS</option><option value="PINEAPPLES">PINEAPPLES</option><option value="PISTACHIOS">PISTACHIOS</option><option value="PITW">PITW</option><option value="PLUM-APRICOT HYBRIDS">PLUM-APRICOT HYBRIDS</option><option value="PLUMS">PLUMS</option><option value="PLUMS &amp; PRUNES">PLUMS &amp; PRUNES</option><option value="POMEGRANATES">POMEGRANATES</option><option value="POPCORN">POPCORN</option><option value="PORK">PORK</option><option value="POTASH">POTASH</option><option value="POTASH &amp; PHOSPHATE">POTASH &amp; PHOSPHATE</option><option value="POTATOES">POTATOES</option><option value="POTATOES &amp; DRY BEANS">POTATOES &amp; DRY BEANS</option><option value="POULTRY BY-PRODUCT MEALS">POULTRY BY-PRODUCT MEALS</option><option value="POULTRY FATS">POULTRY FATS</option><option value="POULTRY TOTALS">POULTRY TOTALS</option><option value="POULTRY, OTHER">POULTRY, OTHER</option><option value="PPITW">PPITW</option><option value="PRACTICES">PRACTICES</option><option value="PRICE INDEX RATIO">PRICE INDEX RATIO</option><option value="PRODUCTION ITEMS">PRODUCTION ITEMS</option><option value="PROPAGATIVE MATERIAL">PROPAGATIVE MATERIAL</option><option value="PRUNES">PRUNES</option><option value="PUMPKINS">PUMPKINS</option><option value="PUMPS">PUMPS</option><option value="QUAIL">QUAIL</option><option value="RABBITS">RABBITS</option><option value="RADISHES">RADISHES</option><option value="RAPESEED">RAPESEED</option><option value="RASPBERRIES">RASPBERRIES</option><option value="RED MEAT">RED MEAT</option><option value="RENT">RENT</option><option value="REPAIRS">REPAIRS</option><option value="RETURNS &amp; ALLOWANCES">RETURNS &amp; ALLOWANCES</option><option value="RHEAS">RHEAS</option><option value="RHUBARB">RHUBARB</option><option value="RICE">RICE</option><option value="ROW CROPS">ROW CROPS</option><option value="RYE">RYE</option><option value="SAFFLOWER">SAFFLOWER</option><option value="SEEDS &amp; PLANTS TOTALS">SEEDS &amp; PLANTS TOTALS</option><option value="SELF PROPELLED">SELF PROPELLED</option><option value="SESAME">SESAME</option><option value="SHEEP">SHEEP</option><option value="SHEEP &amp; GOATS TOTALS">SHEEP &amp; GOATS TOTALS</option><option value="SHERBET">SHERBET</option><option value="SHORT TERM WOODY CROPS">SHORT TERM WOODY CROPS</option><option value="SMALL GRAINS">SMALL GRAINS</option><option value="SNOW">SNOW</option><option value="SOD">SOD</option><option value="SOIL">SOIL</option><option value="SORGHUM">SORGHUM</option><option value="SOYBEANS">SOYBEANS</option><option value="SPECIALTY ANIMAL TOTALS">SPECIALTY ANIMAL TOTALS</option><option value="SPECIALTY ANIMALS, OTHER">SPECIALTY ANIMALS, OTHER</option><option value="SPINACH">SPINACH</option><option value="SPORT FISH">SPORT FISH</option><option value="SQUASH">SQUASH</option><option value="STRAWBERRIES">STRAWBERRIES</option><option value="SUGARBEETS">SUGARBEETS</option><option value="SUGARCANE">SUGARCANE</option><option value="SUNFLOWER">SUNFLOWER</option><option value="SUPPLIES">SUPPLIES</option><option value="SUPPLIES &amp; REPAIRS">SUPPLIES &amp; REPAIRS</option><option value="SWEET CORN">SWEET CORN</option><option value="SWEET POTATOES">SWEET POTATOES</option><option value="SWEET RICE">SWEET RICE</option><option value="SWITCHGRASS">SWITCHGRASS</option><option value="TALLOW">TALLOW</option><option value="TANGELOS">TANGELOS</option><option value="TANGERINES">TANGERINES</option><option value="TARO">TARO</option><option value="TAXES">TAXES</option><option value="TEMPLES">TEMPLES</option><option value="TENANTS">TENANTS</option><option value="TOBACCO">TOBACCO</option><option value="TOMATOES">TOMATOES</option><option value="TRACTORS">TRACTORS</option><option value="TRACTORS &amp; SELF PROPELLED">TRACTORS &amp; SELF PROPELLED</option><option value="TRANSPLANTS">TRANSPLANTS</option><option value="TREE NUT TOTALS">TREE NUT TOTALS</option><option value="TREE NUTS, OTHER">TREE NUTS, OTHER</option><option value="TRITICALE">TRITICALE</option><option value="TRUCKS">TRUCKS</option><option value="TRUCKS &amp; AUTOS">TRUCKS &amp; AUTOS</option><option value="TURKEYS">TURKEYS</option><option value="TURNIPS">TURNIPS</option><option value="VEAL">VEAL</option><option value="VEGETABLE SEEDS">VEGETABLE SEEDS</option><option value="VEGETABLE TOTALS">VEGETABLE TOTALS</option><option value="VEGETABLES, MIXED">VEGETABLES, MIXED</option><option value="VEGETABLES, OTHER">VEGETABLES, OTHER</option><option value="WALNUTS">WALNUTS</option><option value="WATER">WATER</option><option value="WATER ICES">WATER ICES</option><option value="WATERCRESS">WATERCRESS</option><option value="WELLS">WELLS</option><option value="WHEAT">WHEAT</option><option value="WHEY">WHEY</option><option value="WILD RICE">WILD RICE</option><option value="WOODY ORNAMENTALS &amp; VINES, OTHER">WOODY ORNAMENTALS &amp; VINES, OTHER</option><option value="WOOL">WOOL</option><option value="YOGURT">YOGURT</option></select>
+                     </div>
+        <form action="ClassName.submitComm" id="commform" data-bind="true">
+         <input type="text" id="commodity_input" name="name">
+         <input type="submit" value="Submit commodity" id="commodity_submit">
+        </form>
+                </div>
+    <div id="statisticcat_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="statisticcat_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('statisticcat_desc') );">
+                     <div class="selectLabel">Category: </div>
+                     <div id="statisticcat_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="statisticcat_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('statisticcat_desc') );" -->
+                          <select id="statisticcat_desc" name="statisticcat_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="APPLICATIONS">APPLICATIONS</option><option value="AREA HARVESTED">AREA HARVESTED</option><option value="AREA PLANTED">AREA PLANTED</option><option value="AREA PLANTED, NET">AREA PLANTED, NET</option><option value="CONDITION">CONDITION</option><option value="CONDITION, 5 YEAR AVG">CONDITION, 5 YEAR AVG</option><option value="CONDITION, PREVIOUS YEAR">CONDITION, PREVIOUS YEAR</option><option value="DAMAGE">DAMAGE</option><option value="DAMAGE, 5 YEAR AVG">DAMAGE, 5 YEAR AVG</option><option value="DAMAGE, PREVIOUS YEAR">DAMAGE, PREVIOUS YEAR</option><option value="DISAPPEARANCE">DISAPPEARANCE</option><option value="HEAD COUNT">HEAD COUNT</option><option value="HEIGHT, AVG">HEIGHT, AVG</option><option value="HEIGHT, AVG, PREVIOUS YEAR">HEIGHT, AVG, PREVIOUS YEAR</option><option value="INFESTATION">INFESTATION</option><option value="PEST MGMT">PEST MGMT</option><option value="PRICE REACTION">PRICE REACTION</option><option value="PRICE REACTION, DECREASE">PRICE REACTION, DECREASE</option><option value="PRICE REACTION, INCREASE">PRICE REACTION, INCREASE</option><option value="PRICE REACTION, NO CHANGE">PRICE REACTION, NO CHANGE</option><option value="PRICE RECEIVED">PRICE RECEIVED</option><option value="PRICE RECEIVED AFTER REPORT">PRICE RECEIVED AFTER REPORT</option><option value="PRICE RECEIVED PRIOR TO CLOSING">PRICE RECEIVED PRIOR TO CLOSING</option><option value="PRICE RECEIVED, ADJUSTED BASE">PRICE RECEIVED, ADJUSTED BASE</option><option value="PRICE RECEIVED, PARITY">PRICE RECEIVED, PARITY</option><option value="PROCESSED IN LAB">PROCESSED IN LAB</option><option value="PRODUCTION">PRODUCTION</option><option value="PROGRESS">PROGRESS</option><option value="PROGRESS, 5 YEAR AVG">PROGRESS, 5 YEAR AVG</option><option value="PROGRESS, PREVIOUS YEAR">PROGRESS, PREVIOUS YEAR</option><option value="RELATIVE WEIGHT">RELATIVE WEIGHT</option><option value="SALES">SALES</option><option value="SALES IN CONVENTIONAL MARKETS">SALES IN CONVENTIONAL MARKETS</option><option value="SALES IN ORGANIC MARKETS">SALES IN ORGANIC MARKETS</option><option value="STOCKS">STOCKS</option><option value="TREATED">TREATED</option><option value="USAGE">USAGE</option><option value="VOLUME HANDLED">VOLUME HANDLED</option><option value="WATER APPLIED">WATER APPLIED</option><option value="YIELD">YIELD</option></select>
+                     </div>
+        <form action="ClassName.submitSC" id="scform" data-bind="true">
+         <input type="text" id="sc_input" name="name">
+         <input type="submit" value="Submit statisticcat_desc" id="sc_submit">
+        </form>
+                </div>
+
+    <div id="short_desc" class="selectGroup" style="opacity: 1;">
+ 		             <div id="short_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('year') );">
+                     <div class="selectLabel">Short Description: </div>
+
+        <form action="ClassName.submitShortD" id="ShortDform" data-bind="true">
+         <input type="text" id="ShortD_input" name="name">
+         <input type="submit" value="Submit short_desc" id="ShortD_submit">
+        </form>
+
+                </div>
+
+
+    <div class="selectHeader">
+                    <div class="subheading">
+                        <!--
+                        Select Location (select one or more) <div id="Locationhelp" style="float:right" ><img onclick="toggleHelp('Location_help');" height="20px" width="20px" src="/static/images/help-icon.png"></div>
+                        -->
+                        Select Location
+                   </div>
+                   <br clear="all">
+    </div>
+    <div id="agg_level_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="agg_level_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('agg_level_desc') );">
+                     <div class="selectLabel">Geographic Level: </div>
+                     <div id="agg_level_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="agg_level_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('agg_level_desc') );" -->
+                          <select id="agg_level_desc" name="agg_level_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="AGRICULTURAL DISTRICT">AGRICULTURAL DISTRICT</option><option value="COUNTY">COUNTY</option><option value="INTERNATIONAL">INTERNATIONAL</option><option value="NATIONAL">NATIONAL</option><option value="REGION : MULTI-STATE">REGION : MULTI-STATE</option><option value="REGION : SUB-STATE">REGION : SUB-STATE</option><option value="STATE">STATE</option><option value="WATERSHED">WATERSHED</option><option value="ZIP CODE">ZIP CODE</option></select>
+                     </div>
+        <form action="ClassName.submitAGL" id="aglform" data-bind="true">
+         <input type="text" id="agl_input" name="name">
+         <input type="submit" value="Submit agg_level_desc" id="agl_submit">
+        </form>
+                </div>
+    <div id="state_name_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="state_name_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('state_name') );">
+                     <div class="selectLabel">State: </div>
+                     <div id="state_name_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="state_name_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('state_name') );" -->
+                          <select id="state_name" name="state_name" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="ALABAMA">ALABAMA</option><option value="ALASKA">ALASKA</option><option value="ARIZONA">ARIZONA</option><option value="ARKANSAS">ARKANSAS</option><option value="CALIFORNIA">CALIFORNIA</option><option value="COLORADO">COLORADO</option><option value="CONNECTICUT">CONNECTICUT</option><option value="DELAWARE">DELAWARE</option><option value="FLORIDA">FLORIDA</option><option value="GEORGIA">GEORGIA</option><option value="HAWAII">HAWAII</option><option value="IDAHO">IDAHO</option><option value="ILLINOIS">ILLINOIS</option><option value="INDIANA">INDIANA</option><option value="IOWA">IOWA</option><option value="KANSAS">KANSAS</option><option value="KENTUCKY">KENTUCKY</option><option value="LOUISIANA">LOUISIANA</option><option value="MAINE">MAINE</option><option value="MARYLAND">MARYLAND</option><option value="MASSACHUSETTS">MASSACHUSETTS</option><option value="MICHIGAN">MICHIGAN</option><option value="MINNESOTA">MINNESOTA</option><option value="MISSISSIPPI">MISSISSIPPI</option><option value="MISSOURI">MISSOURI</option><option value="MONTANA">MONTANA</option><option value="NEBRASKA">NEBRASKA</option><option value="NEVADA">NEVADA</option><option value="NEW HAMPSHIRE">NEW HAMPSHIRE</option><option value="NEW JERSEY">NEW JERSEY</option><option value="NEW MEXICO">NEW MEXICO</option><option value="NEW YORK">NEW YORK</option><option value="NORTH CAROLINA">NORTH CAROLINA</option><option value="NORTH DAKOTA">NORTH DAKOTA</option><option value="OHIO">OHIO</option><option value="OKLAHOMA">OKLAHOMA</option><option value="OREGON">OREGON</option><option value="PENNSYLVANIA">PENNSYLVANIA</option><option value="SOUTH CAROLINA">SOUTH CAROLINA</option><option value="SOUTH DAKOTA">SOUTH DAKOTA</option><option value="TENNESSEE">TENNESSEE</option><option value="TEXAS">TEXAS</option><option value="UTAH">UTAH</option><option value="VERMONT">VERMONT</option><option value="VIRGINIA">VIRGINIA</option><option value="WASHINGTON">WASHINGTON</option><option value="WEST VIRGINIA">WEST VIRGINIA</option><option value="WISCONSIN">WISCONSIN</option><option value="WYOMING">WYOMING</option></select>
+                     </div>
+        <form action="ClassName.submitSN" id="snform" data-bind="true">
+         <input type="text" id="sn_input" name="name">
+         <input type="submit" value="Submit state_name" id="sn_submit">
+        </form>
+                </div>
+
+
+    <div id="zip_5_div" class="selectGroup" style="opacity: 1; ">
+ 		             <div id="zip_5_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('zip_5') );">
+                     <div class="selectLabel">Zip Code: </div>
+                     <div id="zip_5_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="zip_5_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('zip_5') );" -->
+                          <select id="zip_5" name="zip_5" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                          <option value="30002">30002</option><option value="30004">30004</option><option value="30005">30005</option><option value="30006">30006</option><option value="30008">30008</option><option value="30011">30011</option><option value="30012">30012</option><option value="30013">30013</option><option value="30014">30014</option><option value="30015">30015</option><option value="30016">30016</option><option value="30017">30017</option><option value="30019">30019</option><option value="30021">30021</option><option value="30022">30022</option><option value="30024">30024</option><option value="30025">30025</option><option value="30028">30028</option><option value="30030">30030</option><option value="30032">30032</option><option value="30033">30033</option><option value="30034">30034</option><option value="30035">30035</option><option value="30038">30038</option><option value="30039">30039</option><option value="30040">30040</option><option value="30041">30041</option><option value="30042">30042</option><option value="30043">30043</option><option value="30044">30044</option><option value="30045">30045</option><option value="30046">30046</option><option value="30047">30047</option><option value="30048">30048</option><option value="30052">30052</option><option value="30054">30054</option><option value="30055">30055</option><option value="30056">30056</option><option value="30058">30058</option><option value="30060">30060</option><option value="30062">30062</option><option value="30064">30064</option><option value="30066">30066</option><option value="30067">30067</option><option value="30068">30068</option><option value="30071">30071</option><option value="30075">30075</option><option value="30076">30076</option><option value="30077">30077</option><option value="30078">30078</option><option value="30080">30080</option><option value="30081">30081</option><option value="30082">30082</option><option value="30083">30083</option><option value="30084">30084</option><option value="30087">30087</option><option value="30088">30088</option><option value="30091">30091</option><option value="30092">30092</option><option value="30093">30093</option><option value="30094">30094</option><option value="30096">30096</option><option value="30097">30097</option><option value="30101">30101</option><option value="30102">30102</option><option value="30103">30103</option><option value="30104">30104</option><option value="30105">30105</option><option value="30107">30107</option><option value="30108">30108</option><option value="30110">30110</option><option value="30112">30112</option><option value="30113">30113</option><option value="30114">30114</option><option value="30115">30115</option><option value="30116">30116</option><option value="30117">30117</option><option value="30120">30120</option><option value="30121">30121</option><option value="30122">30122</option><option value="30123">30123</option><option value="30124">30124</option><option value="30125">30125</option><option value="30126">30126</option><option value="30127">30127</option><option value="30132">30132</option><option value="30133">30133</option><option value="30134">30134</option><option value="30135">30135</option><option value="30137">30137</option><option value="30138">30138</option><option value="30139">30139</option><option value="30140">30140</option><option value="30141">30141</option><option value="30142">30142</option><option value="30143">30143</option><option value="30144">30144</option><option value="30145">30145</option><option value="30147">30147</option><option value="30148">30148</option><option value="30149">30149</option><option value="30150">30150</option><option value="30152">30152</option><option value="30153">30153</option><option value="30156">30156</option><option value="30157">30157</option><option value="30161">30161</option><option value="30162">30162</option><option value="30165">30165</option><option value="30169">30169</option><option value="30170">30170</option><option value="30171">30171</option><option value="30172">30172</option><option value="30173">30173</option><option value="30175">30175</option><option value="30176">30176</option><option value="30177">30177</option><option value="30178">30178</option><option value="30179">30179</option><option value="30180">30180</option><option value="30182">30182</option><option value="30183">30183</option><option value="30184">30184</option><option value="30185">30185</option><option value="30187">30187</option><option value="30188">30188</option><option value="30189">30189</option><option value="30204">30204</option><option value="30205">30205</option><option value="30206">30206</option><option value="30212">30212</option><option value="30213">30213</option><option value="30214">30214</option><option value="30215">30215</option><option value="30216">30216</option><option value="30217">30217</option><option value="30218">30218</option><option value="30220">30220</option><option value="30222">30222</option><option value="30223">30223</option><option value="30224">30224</option><option value="30228">30228</option><option value="30229">30229</option><option value="30230">30230</option><option value="30233">30233</option><option value="30234">30234</option><option value="30236">30236</option><option value="30238">30238</option><option value="30240">30240</option><option value="30241">30241</option><option value="30248">30248</option><option value="30250">30250</option><option value="30251">30251</option><option value="30252">30252</option><option value="30253">30253</option><option value="30256">30256</option><option value="30257">30257</option><option value="30258">30258</option><option value="30259">30259</option><option value="30260">30260</option><option value="30263">30263</option><option value="30264">30264</option><option value="30265">30265</option><option value="30266">30266</option><option value="30268">30268</option><option value="30269">30269</option><option value="30271">30271</option><option value="30273">30273</option><option value="30274">30274</option><option value="30276">30276</option><option value="30277">30277</option><option value="30281">30281</option><option value="30284">30284</option><option value="30285">30285</option><option value="30286">30286</option><option value="30288">30288</option><option value="30289">30289</option><option value="30290">30290</option><option value="30291">30291</option><option value="30292">30292</option><option value="30293">30293</option><option value="30294">30294</option><option value="30295">30295</option><option value="30296">30296</option><option value="30297">30297</option><option value="30298">30298</option><option value="30302">30302</option><option value="30305">30305</option><option value="30306">30306</option><option value="30307">30307</option><option value="30308">30308</option><option value="30309">30309</option><option value="30310">30310</option><option value="30311">30311</option><option value="30312">30312</option><option value="30315">30315</option><option value="30316">30316</option><option value="30318">30318</option><option value="30319">30319</option><option value="30324">30324</option><option value="30325">30325</option><option value="30326">30326</option><option value="30327">30327</option><option value="30328">30328</option><option value="30329">30329</option><option value="30331">30331</option><option value="30338">30338</option><option value="30339">30339</option><option value="30340">30340</option><option value="30341">30341</option><option value="30342">30342</option><option value="30345">30345</option><option value="30347">30347</option><option value="30349">30349</option><option value="30350">30350</option><option value="30354">30354</option><option value="30355">30355</option><option value="30356">30356</option><option value="30358">30358</option><option value="30360">30360</option><option value="30361">30361</option><option value="30401">30401</option><option value="30410">30410</option><option value="30411">30411</option><option value="30412">30412</option><option value="30413">30413</option><option value="30414">30414</option><option value="30415">30415</option><option value="30417">30417</option><option value="30420">30420</option><option value="30421">30421</option><option value="30423">30423</option><option value="30424">30424</option><option value="30425">30425</option><option value="30426">30426</option><option value="30427">30427</option><option value="30428">30428</option><option value="30429">30429</option><option value="30434">30434</option><option value="30436">30436</option><option value="30438">30438</option><option value="30439">30439</option><option value="30441">30441</option><option value="30442">30442</option><option value="30445">30445</option><option value="30446">30446</option><option value="30448">30448</option><option value="30450">30450</option><option value="30451">30451</option><option value="30452">30452</option><option value="30453">30453</option><option value="30454">30454</option><option value="30455">30455</option><option value="30456">30456</option><option value="30457">30457</option><option value="30458">30458</option><option value="30459">30459</option><option value="30460">30460</option><option value="30461">30461</option><option value="30464">30464</option><option value="30467">30467</option><option value="30470">30470</option><option value="30471">30471</option><option value="30473">30473</option><option value="30474">30474</option><option value="30475">30475</option><option value="30477">30477</option><option value="30501">30501</option><option value="30502">30502</option><option value="30503">30503</option><option value="30504">30504</option><option value="30506">30506</option><option value="30507">30507</option><option value="30510">30510</option><option value="30511">30511</option><option value="30512">30512</option><option value="30513">30513</option><option value="30514">30514</option><option value="30516">30516</option><option value="30517">30517</option><option value="30518">30518</option><option value="30519">30519</option><option value="30520">30520</option><option value="30521">30521</option><option value="30522">30522</option><option value="30523">30523</option><option value="30525">30525</option><option value="30527">30527</option><option value="30528">30528</option><option value="30529">30529</option><option value="30530">30530</option><option value="30531">30531</option><option value="30533">30533</option><option value="30534">30534</option><option value="30535">30535</option><option value="30536">30536</option><option value="30537">30537</option><option value="30538">30538</option><option value="30539">30539</option><option value="30540">30540</option><option value="30541">30541</option><option value="30542">30542</option><option value="30543">30543</option><option value="30545">30545</option><option value="30546">30546</option><option value="30547">30547</option><option value="30548">30548</option><option value="30549">30549</option><option value="30552">30552</option><option value="30553">30553</option><option value="30554">30554</option><option value="30555">30555</option><option value="30557">30557</option><option value="30558">30558</option><option value="30559">30559</option><option value="30560">30560</option><option value="30563">30563</option><option value="30564">30564</option><option value="30565">30565</option><option value="30566">30566</option><option value="30567">30567</option><option value="30568">30568</option><option value="30571">30571</option><option value="30572">30572</option><option value="30575">30575</option><option value="30576">30576</option><option value="30577">30577</option><option value="30580">30580</option><option value="30581">30581</option><option value="30582">30582</option><option value="30601">30601</option><option value="30602">30602</option><option value="30603">30603</option><option value="30604">30604</option><option value="30605">30605</option><option value="30606">30606</option><option value="30607">30607</option><option value="30608">30608</option><option value="30612">30612</option><option value="30619">30619</option><option value="30620">30620</option><option value="30621">30621</option><option value="30622">30622</option><option value="30623">30623</option><option value="30624">30624</option><option value="30625">30625</option><option value="30627">30627</option><option value="30628">30628</option><option value="30629">30629</option><option value="30630">30630</option><option value="30631">30631</option><option value="30633">30633</option><option value="30634">30634</option><option value="30635">30635</option><option value="30638">30638</option><option value="30639">30639</option><option value="30641">30641</option><option value="30642">30642</option><option value="30643">30643</option><option value="30645">30645</option><option value="30646">30646</option><option value="30647">30647</option><option value="30648">30648</option><option value="30650">30650</option><option value="30655">30655</option><option value="30656">30656</option><option value="30660">30660</option><option value="30662">30662</option><option value="30663">30663</option><option value="30664">30664</option><option value="30665">30665</option><option value="30666">30666</option><option value="30667">30667</option><option value="30668">30668</option><option value="30669">30669</option><option value="30671">30671</option><option value="30673">30673</option><option value="30677">30677</option><option value="30678">30678</option><option value="30680">30680</option><option value="30683">30683</option><option value="30701">30701</option><option value="30703">30703</option><option value="30705">30705</option><option value="30707">30707</option><option value="30708">30708</option><option value="30710">30710</option><option value="30711">30711</option><option value="30719">30719</option><option value="30720">30720</option><option value="30721">30721</option><option value="30722">30722</option><option value="30724">30724</option><option value="30725">30725</option><option value="30728">30728</option><option value="30730">30730</option><option value="30731">30731</option><option value="30732">30732</option><option value="30733">30733</option><option value="30734">30734</option><option value="30735">30735</option><option value="30736">30736</option><option value="30738">30738</option><option value="30739">30739</option><option value="30740">30740</option><option value="30741">30741</option><option value="30742">30742</option><option value="30746">30746</option><option value="30747">30747</option><option value="30750">30750</option><option value="30751">30751</option><option value="30752">30752</option><option value="30753">30753</option><option value="30755">30755</option><option value="30756">30756</option><option value="30757">30757</option><option value="30802">30802</option><option value="30803">30803</option><option value="30805">30805</option><option value="30806">30806</option><option value="30808">30808</option><option value="30809">30809</option><option value="30810">30810</option><option value="30812">30812</option><option value="30813">30813</option><option value="30814">30814</option><option value="30815">30815</option><option value="30816">30816</option><option value="30817">30817</option><option value="30818">30818</option><option value="30820">30820</option><option value="30821">30821</option><option value="30822">30822</option><option value="30823">30823</option><option value="30824">30824</option><option value="30828">30828</option><option value="30830">30830</option><option value="30833">30833</option><option value="30901">30901</option><option value="30904">30904</option><option value="30906">30906</option><option value="30907">30907</option><option value="30909">30909</option><option value="30914">30914</option><option value="30916">30916</option><option value="30917">30917</option><option value="30919">30919</option><option value="31001">31001</option><option value="31002">31002</option><option value="31003">31003</option><option value="31004">31004</option><option value="31005">31005</option><option value="31006">31006</option><option value="31007">31007</option><option value="31008">31008</option><option value="31009">31009</option><option value="31010">31010</option><option value="31011">31011</option><option value="31012">31012</option><option value="31013">31013</option><option value="31014">31014</option><option value="31015">31015</option><option value="31016">31016</option><option value="31017">31017</option><option value="31018">31018</option><option value="31019">31019</option><option value="31020">31020</option><option value="31021">31021</option><option value="31022">31022</option><option value="31023">31023</option><option value="31024">31024</option><option value="31025">31025</option><option value="31027">31027</option><option value="31028">31028</option><option value="31029">31029</option><option value="31030">31030</option><option value="31031">31031</option><option value="31032">31032</option><option value="31033">31033</option><option value="31035">31035</option><option value="31036">31036</option><option value="31037">31037</option><option value="31038">31038</option><option value="31039">31039</option><option value="31040">31040</option><option value="31041">31041</option><option value="31042">31042</option><option value="31044">31044</option><option value="31045">31045</option><option value="31046">31046</option><option value="31047">31047</option><option value="31049">31049</option><option value="31050">31050</option><option value="31051">31051</option><option value="31052">31052</option><option value="31054">31054</option><option value="31055">31055</option><option value="31057">31057</option><option value="31058">31058</option><option value="31059">31059</option><option value="31060">31060</option><option value="31061">31061</option><option value="31063">31063</option><option value="31064">31064</option><option value="31065">31065</option><option value="31066">31066</option><option value="31067">31067</option><option value="31068">31068</option><option value="31069">31069</option><option value="31070">31070</option><option value="31071">31071</option><option value="31072">31072</option><option value="31075">31075</option><option value="31076">31076</option><option value="31077">31077</option><option value="31078">31078</option><option value="31079">31079</option><option value="31081">31081</option><option value="31082">31082</option><option value="31083">31083</option><option value="31085">31085</option><option value="31086">31086</option><option value="31087">31087</option><option value="31088">31088</option><option value="31089">31089</option><option value="31090">31090</option><option value="31091">31091</option><option value="31092">31092</option><option value="31093">31093</option><option value="31094">31094</option><option value="31095">31095</option><option value="31096">31096</option><option value="31097">31097</option><option value="31099">31099</option><option value="31106">31106</option><option value="31131">31131</option><option value="31201">31201</option><option value="31202">31202</option><option value="31204">31204</option><option value="31205">31205</option><option value="31206">31206</option><option value="31208">31208</option><option value="31210">31210</option><option value="31211">31211</option><option value="31216">31216</option><option value="31217">31217</option><option value="31220">31220</option><option value="31301">31301</option><option value="31302">31302</option><option value="31303">31303</option><option value="31304">31304</option><option value="31305">31305</option><option value="31307">31307</option><option value="31308">31308</option><option value="31309">31309</option><option value="31310">31310</option><option value="31312">31312</option><option value="31313">31313</option><option value="31316">31316</option><option value="31319">31319</option><option value="31320">31320</option><option value="31321">31321</option><option value="31322">31322</option><option value="31323">31323</option><option value="31324">31324</option><option value="31326">31326</option><option value="31328">31328</option><option value="31329">31329</option><option value="31331">31331</option><option value="31333">31333</option><option value="31401">31401</option><option value="31402">31402</option><option value="31404">31404</option><option value="31405">31405</option><option value="31406">31406</option><option value="31407">31407</option><option value="31408">31408</option><option value="31410">31410</option><option value="31411">31411</option><option value="31416">31416</option><option value="31419">31419</option><option value="31420">31420</option><option value="31501">31501</option><option value="31502">31502</option><option value="31503">31503</option><option value="31510">31510</option><option value="31512">31512</option><option value="31513">31513</option><option value="31515">31515</option><option value="31516">31516</option><option value="31518">31518</option><option value="31519">31519</option><option value="31520">31520</option><option value="31521">31521</option><option value="31522">31522</option><option value="31523">31523</option><option value="31525">31525</option><option value="31532">31532</option><option value="31533">31533</option><option value="31534">31534</option><option value="31535">31535</option><option value="31537">31537</option><option value="31539">31539</option><option value="31542">31542</option><option value="31543">31543</option><option value="31544">31544</option><option value="31545">31545</option><option value="31546">31546</option><option value="31548">31548</option><option value="31549">31549</option><option value="31550">31550</option><option value="31551">31551</option><option value="31552">31552</option><option value="31553">31553</option><option value="31554">31554</option><option value="31555">31555</option><option value="31556">31556</option><option value="31557">31557</option><option value="31558">31558</option><option value="31560">31560</option><option value="31561">31561</option><option value="31562">31562</option><option value="31563">31563</option><option value="31564">31564</option><option value="31565">31565</option><option value="31566">31566</option><option value="31567">31567</option><option value="31569">31569</option><option value="31598">31598</option><option value="31601">31601</option><option value="31602">31602</option><option value="31603">31603</option><option value="31604">31604</option><option value="31605">31605</option><option value="31606">31606</option><option value="31620">31620</option><option value="31622">31622</option><option value="31624">31624</option><option value="31625">31625</option><option value="31626">31626</option><option value="31627">31627</option><option value="31629">31629</option><option value="31630">31630</option><option value="31631">31631</option><option value="31632">31632</option><option value="31634">31634</option><option value="31635">31635</option><option value="31636">31636</option><option value="31637">31637</option><option value="31638">31638</option><option value="31639">31639</option><option value="31641">31641</option><option value="31642">31642</option><option value="31643">31643</option><option value="31645">31645</option><option value="31647">31647</option><option value="31648">31648</option><option value="31649">31649</option><option value="31650">31650</option><option value="31701">31701</option><option value="31702">31702</option><option value="31704">31704</option><option value="31705">31705</option><option value="31706">31706</option><option value="31707">31707</option><option value="31708">31708</option><option value="31709">31709</option><option value="31711">31711</option><option value="31712">31712</option><option value="31714">31714</option><option value="31716">31716</option><option value="31719">31719</option><option value="31720">31720</option><option value="31721">31721</option><option value="31722">31722</option><option value="31727">31727</option><option value="31730">31730</option><option value="31733">31733</option><option value="31735">31735</option><option value="31738">31738</option><option value="31739">31739</option><option value="31743">31743</option><option value="31744">31744</option><option value="31747">31747</option><option value="31749">31749</option><option value="31750">31750</option><option value="31753">31753</option><option value="31756">31756</option><option value="31757">31757</option><option value="31758">31758</option><option value="31760">31760</option><option value="31763">31763</option><option value="31764">31764</option><option value="31765">31765</option><option value="31768">31768</option><option value="31769">31769</option><option value="31771">31771</option><option value="31772">31772</option><option value="31773">31773</option><option value="31774">31774</option><option value="31775">31775</option><option value="31776">31776</option><option value="31778">31778</option><option value="31779">31779</option><option value="31780">31780</option><option value="31781">31781</option><option value="31782">31782</option><option value="31783">31783</option><option value="31784">31784</option><option value="31787">31787</option><option value="31788">31788</option><option value="31789">31789</option><option value="31790">31790</option><option value="31791">31791</option><option value="31792">31792</option><option value="31793">31793</option><option value="31794">31794</option><option value="31795">31795</option><option value="31796">31796</option><option value="31798">31798</option><option value="31799">31799</option><option value="31801">31801</option><option value="31803">31803</option><option value="31804">31804</option><option value="31805">31805</option><option value="31806">31806</option><option value="31807">31807</option><option value="31808">31808</option><option value="31810">31810</option><option value="31811">31811</option><option value="31812">31812</option><option value="31814">31814</option><option value="31815">31815</option><option value="31816">31816</option><option value="31820">31820</option><option value="31821">31821</option><option value="31822">31822</option><option value="31823">31823</option><option value="31824">31824</option><option value="31825">31825</option><option value="31826">31826</option><option value="31827">31827</option><option value="31829">31829</option><option value="31830">31830</option><option value="31831">31831</option><option value="31832">31832</option><option value="31833">31833</option><option value="31836">31836</option><option value="31901">31901</option><option value="31902">31902</option><option value="31904">31904</option><option value="31906">31906</option><option value="31907">31907</option><option value="31908">31908</option><option value="31909">31909</option><option value="31917">31917</option><option value="39813">39813</option><option value="39815">39815</option><option value="39817">39817</option><option value="39818">39818</option><option value="39819">39819</option><option value="39823">39823</option><option value="39824">39824</option><option value="39825">39825</option><option value="39826">39826</option><option value="39827">39827</option><option value="39828">39828</option><option value="39829">39829</option><option value="39832">39832</option><option value="39834">39834</option><option value="39836">39836</option><option value="39837">39837</option><option value="39840">39840</option><option value="39841">39841</option><option value="39842">39842</option><option value="39845">39845</option><option value="39846">39846</option><option value="39851">39851</option><option value="39852">39852</option><option value="39854">39854</option><option value="39859">39859</option><option value="39861">39861</option><option value="39862">39862</option><option value="39866">39866</option><option value="39867">39867</option><option value="39870">39870</option><option value="39877">39877</option><option value="39885">39885</option><option value="39886">39886</option><option value="39897">39897</option><option value="99999">99999</option></select>
+                     </div>
+        <form action="ClassName.submitZIP5" id="zip5form" data-bind="true">
+         <input type="text" id="zip5_input" name="name">
+         <input type="submit" value="Submit zip_5" id="zip5_submit">
+        </form>
+                </div>
+    <div id="region_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="region_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('region_desc') );">
+                     <div class="selectLabel">Region: </div>
+                     <div id="region_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="region_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('region_desc') );" -->
+                          <select id="region_desc" name="region_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+
+                         <option value="AZ OTHER">AZ OTHER</option><option value="AZ YUMA/WESTERN">AZ YUMA/WESTERN</option><option value="CA DESERT VALLEY">CA DESERT VALLEY</option><option value="CA OTHER AREA">CA OTHER AREA</option><option value="FL HASTINGS">FL HASTINGS</option><option value="FL OTHER">FL OTHER</option><option value="ID 10 SW COUNTIES">ID 10 SW COUNTIES</option><option value="ID OTHER">ID OTHER</option><option value="INDIAN RIVER AREA">INDIAN RIVER AREA</option><option value="INTERIOR AREA">INTERIOR AREA</option><option value="NY LONG ISLAND">NY LONG ISLAND</option><option value="NY UPSTATE">NY UPSTATE</option><option value="OR MALHUER">OR MALHUER</option><option value="OR OTHER">OR OTHER</option><option value="POTATOES - CO OTHER">POTATOES - CO OTHER</option><option value="POTATOES - CO SAN LUIS VALLEY">POTATOES - CO SAN LUIS VALLEY</option></select>
+                     </div>
+        <form action="ClassName.submitRD" id="rdform" data-bind="true">
+         <input type="text" id="rd_input" name="name">
+         <input type="submit" value="Submit region_desc" id="rd_submit">
+        </form>
+                </div>
+
+    <div class="selectHeader">
+                    <div class="subheading">
+                        <!--
+                        Select Time (select one or more) <div id="Timehelp" style="float:right" ><img onclick="toggleHelp('Time_help');" height="20px" width="20px" src="/static/images/help-icon.png"></div>
+                        -->
+                        Select Time
+                   </div>
+                   <br clear="all">
+    </div>
+     <div id="freq_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="freq_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );">
+                     <div class="selectLabel">Frequency: </div>
+                     <div id="freq_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="source_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );" -->
+                          <select id="freq_desc" name="freq_desc" class="selectOption" multiple="multiple" size="9" onchange="javascript:setFlag(this);" nondojotype="dijit.form.MultiSelect">
+                              <option value="ANNUAL">ANNUAL</option><option value="MONTHLY">MONTHLY</option>
+                          <option value="POINT IN TIME">POINT IN TIME</option>
+                          <option value="SEASON">SEASON</option>
+                          <option value="WEEKLY">WEEKLY</option></select>
+                     </div>
+        <form action="ClassName.submitF" id="fform" data-bind="true">
+         <input type="text" id="freq_desc_input" name="name">
+         <input type="submit" value="Submit freq_desc" id="freqe_desc_submit">
+        </form>
+                </div>
+
+    <div id="ref_desc_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="ref_desc_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );">
+                     <div class="selectLabel">Reference Period: </div>
+                     <div id="ref_desc_spinner" class="spinner" style="width:200;display:none;"><img src="/static/images/indicator.gif"></div>
+                          <!--div id="source_desc_outer" style="border:1px dashed gray;padding:0px 10px 10px 10px"  onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('source_desc') );" -->
+                         
+                     </div>
+        <form action="ClassName.submitRP" id="rpform" data-bind="true">
+         <input type="text" id="ref_desc_input" name="name">
+         <input type="submit" value="Submit reference_period_desc" id="ref_desc_submit">
+        </form>
+                </div>
+
+    <div id="year_div" class="selectGroup" style="opacity: 1;">
+ 		             <div id="year_outer" style="border:0px dashed gray;padding:10px" onmouseout="javascript:callUpdateInputOnMouseOut(event, dojo.byId('year') );">
+                     <div class="selectLabel">Year: </div>
+
+        <form action="ClassName.submitYGG" id="yLform" data-bind="true">
+         <input type="text" id="yL_input" name="name">
+         <input type="submit" value="Submit year lowerbound" id="yL_submit">
+        </form>
+                         <form action="ClassName.submitYLB" id="yform" data-bind="true">
+         <input type="text" id="y_input" name="name">
+         <input type="submit" value="Submit year upperbound" id="y_submit">
+        </form>
+                </div>
+
+
+    <div class="selectHeader">
+                    <div class="subheading">
+                        <!--
+                        Select Time (select one or more) <div id="Timehelp" style="float:right" ><img onclick="toggleHelp('Time_help');" height="20px" width="20px" src="/static/images/help-icon.png"></div>
+                        -->
+                    Submit Title and Parameters to Web
+                   </div>
+                   <br clear="all">
+    </div>
+
+
+        <form action="ClassName.form_function_name" id="form" data-bind="true">
+         <input type="text" id="form_input" name="name">
+         <input type="submit" value="Submit Title and Parameters to Web" id="form_submit">
+        </form>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.12.1/dojo/dojo.js"></script>
+    <script type='text/javascript' src='myjs.js'></script>
+    <script type="text/javascript" language="JavaScript">
+
+
+function submitform(){
+  // This how you would change the ending url document.myform.action = "http://quickstats.nass.usda.gov/results/"
+  document.entry_census.submit();
+}
+
+var filters=new Object;
+var filters2=new Object;
+var filtersBack=new Object;
+var request= new Object;
+
+
+ request={};
+
+
+
+  filters={"group_desc":{"visible":true,"index":false,"selectedItems":[],"name":"group_desc","sortOrder":"asc","label":"Group","busy":false},"agg_level_desc":{"visible":true,"name":"agg_level_desc","children":{"watershed_desc":{"visible":false,"name":"watershed_desc","children":false,"index":false,"selectedItems":[],"label":"Watershed","sortOrder":"asc","busy":false},"state_name":{"visible":false,"name":"state_name","children":{"asd_desc":{"visible":false,"name":"asd_desc","children":false,"index":false,"selectedItems":[],"label":"Ag. District","sortOrder":"asc","busy":false},"zip_5":{"visible":false,"name":"zip_5","children":false,"index":false,"selectedItems":[],"label":"Zip Code","sortOrder":"asc","busy":false},"county_name":{"visible":false,"name":"county_name","children":false,"index":false,"selectedItems":[],"label":"County","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"State","sortOrder":"asc","busy":false},"region_desc":{"visible":false,"name":"region_desc","children":false,"index":false,"selectedItems":[],"label":"Region","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"Locale","sortOrder":"asc","busy":false},"commodity_desc":{"visible":true,"name":"commodity_desc","children":{"statisticcat_desc":{"visible":false,"name":"statisticcat_desc","children":false,"index":false,"selectedItems":[],"label":"Category","sortOrder":"asc","busy":false},"short_desc":{"visible":false,"name":"short_desc","children":{"domain_desc":{"visible":false,"name":"domain_desc","children":false,"index":false,"selectedItems":[],"label":"Domain","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"Data Item","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"Commodity","sortOrder":"asc","busy":false},"sector_desc":{"visible":true,"index":false,"selectedItems":[],"name":"sector_desc","sortOrder":"asc","label":"Sector","busy":false},"source_desc":{"visible":true,"index":false,"selectedItems":[],"name":"source_desc","sortOrder":"asc","label":"Program","busy":false},"year":{"visible":true,"name":"year","children":{"freq_desc":{"visible":false,"name":"freq_desc","children":{"reference_period_desc":{"visible":false,"name":"reference_period_desc","children":false,"index":false,"selectedItems":[],"label":"Reference Period","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"Frequency","sortOrder":"asc","busy":false}},"index":false,"selectedItems":[],"label":"Year","sortOrder":"desc","busy":false}};
+
+
+
+function dojoInit() {
+    if ((screen.width<=800) && (screen.height<=600)) {
+      window.location.replace('http://quickstats.nass.usda.gov/mobile');
+    }
+
+    var url=parent.location.hash;
+    //var href = parent.location.href.split("?");
+
+    if (url != ''){
+        url=url.replace('#','');
+        //dojo.xhrGet( {
+        dojo.xhrPost( {
+            url: '/uuid/decode/'+url,
+            form: "entry_census",
+            timeout: 500000,
+            handleAs: "json",
+            load: function(response,ioArgs){
+                request=response;
+                restoreFilter();
+                initInputs();
+            },
+            error: loadError
+         } );
+    }
+    else {
+        var du = new Array();
+        var u = 0;
+        for( property in request) {
+          //if( !(property.match(/long_desc/gi)) &&  !(property.match(/source_desc/gi)) ) {
+          if( !(property.match(/long_desc/gi)) &&  !(property.match(/source_type/gi)) ) {
+              du[u] = property;
+              u++;
+          }
+        }
+        request.breadcrumb = dojo.clone(du);
+        restoreFilter();
+        initInputs();
+    }
+
+    new dijit.Tooltip({
+               id:"getDataTooltip",
+               connectId: ["submit001"],
+               position:"above",
+               label:""
+         });
+
+    new dijit.Tooltip({
+               id:"searchTooltip",
+               connectId: ["search"],
+               position:"above",
+               label:"Search will limit selection lists based on the search phrase."
+         });
+
+}
+
+dojo.addOnLoad(dojoInit);
+
+function setVisibility(id, visibility) {
+    document.getElementById(id).style.display = visibility;
+}
+
+function restoreFilter() {
+  var breadcrumbs = new Array;
+  breadcrumbs = request.breadcrumb;
+
+  for (var param in request){
+      var hide = 1;
+  	  var filterNodes = getFilters(filters);
+  	  for( var filter in filterNodes){
+		if (filterNodes[filter].name == param || param == 'breadcrumb') {
+		  hide=0;
+        }
+      }
+      if(hide == 1) {
+		  var hiddenParam=document.createElement('input');
+		  hiddenParam.type='hidden';
+		  hiddenParam.name=param;
+		  hiddenParam.value=request[param];
+		  document.entry_census.appendChild(hiddenParam);
+		}
+   }
+
+   var ii=1;
+   for(crumb in breadcrumbs){
+		  var filter=getFilter(breadcrumbs[crumb],filters);
+		  filter.index=ii;
+		  filter.selectedItems=request[breadcrumbs[crumb]];
+		  ii++;
+   }
+
+   breadcrumb();
+
+   return 1;
+}
+
+function saveFilters() {
+	var  filtersJSON=dojo.toJson(filters);
+	var date = new Date();
+	var days = 1;
+	date.setTime(date.getTime()+(days*24*60*60*1000));
+	var expires = "; expires="+date.toGMTString();
+	document.cookie="filters="+filtersJSON+expires+"; path=/";
+	return 1;
+}
+
+function initInputs() {
+  var max=getMaxIndex(filters); //
+  if(max > 1 ) {
+    for(var filter in filters) {
+      rebuildOption(filters[filter].name,filters);
+    }
+  }
+}
+
+//--called by clear button
+function goCommHome(){
+   document.location.replace("http://quickstats.nass.usda.gov/by_commodity/");
+}
+//--called by clear button
+function goHome(){
+  this.location.replace("http://quickstats.nass.usda.gov/");
+}
+
+//--set flag on when select menu changed
+var sFlag = 0;
+var timerId = 0;
+var tmpObj={};
+
+function call_updateInputs(){
+  if(sFlag == 1){
+	  sFlag = 0;
+	  updateInputs(tmpObj);
+	  //tmpObj=null;
+      //if ( ! getPage("by_commodity") ) {
+      //   //call displayRowCounts
+      //}
+  }
+}
+
+function setFlag(selectedInput){
+   tmpObj = selectedInput;
+   if(timerId != 0){
+	  clearTimeout(timerId);
+   }
+   timerId = setTimeout(call_updateInputs, 5000); // 5 sec
+   sFlag = 1;
+}
+
+function updateFlag(){
+  sFlag = 1;
+  return;
+}
+
+//-- opera, firefox, safari, msie,chrome
+function isIt(browserName){
+  var browser = navigator.userAgent.toLowerCase();
+  return browser.indexOf(browserName);
+}
+
+//-- call updateInputs on mouseout event
+function callUpdateInputOnMouseOut(e,selectInput){
+  if (!e) var e = window.event;
+  var elmTarg='';
+  var rt = 0;
+  var elmTargId='';
+  var runUpdate=0;
+
+  if(e.type=="mouseout"){
+      if((rt = isIt("msie")) > 0 ) {
+          //elmTarg = e.toElement.tagName;
+          //elmTargId =  e.toElement.id;
+		  runUpdate=1;
+      }
+      //else if((rt = isIt("chrome") > 0 )) {
+      //    elmTarg = e.srcElement.tagName;
+      //}
+      else {
+          elmTarg = e.relatedTarget.tagName;
+          elmTargId = e.relatedTarget.id;
+		  //if(elmTarg == "SELECT" || elmTarg =="DIV"){
+		  if(elmTarg =="DIV"){
+		     runUpdate = 1;
+		  } else {
+             runUpdate = 0;
+		  }
+      }
+
+      if(runUpdate==1) {
+          clearTimeout(timerId);
+          if(sFlag == 1) {
+               sFlag = 0;
+               updateInputs(selectInput);
+               //if ( ! getPage("by_commodity") ) {
+               //   ;
+               //}
+          }
+      }
+   }
+}
+
+function updateInputs(currentInput) {
+    setFilter(currentInput.name);
+    createOptions();
+}
+
+
+function isActive(inputName) {
+  filter=getFilter(inputName,filters);
+  if(filter==false ||  filter.index==false) {
+    return false;
+  }else {
+    return true;
+  }
+}
+
+
+function setFilter(inputName) {
+  var filterObject=new Object;
+  var index;
+
+  if(isActive(inputName)) {
+    deactivateComponents(inputName);
+    index=getFilter(inputName,filters).index;
+  } else {
+    index=getMaxIndex(filters);
+  }
+
+  filter=getFilter(inputName,filters);
+  element=dojo.byId(inputName);
+  filter.selectedItems=new Array;
+
+  var jj=0;
+  for(var ii=0; ii < element.options.length;ii++) {
+    if(element.options[ii].selected && element.options[ii].type!='hidden') {
+      filter.selectedItems[jj]=element.options[ii].value;
+      jj++;
+    }
+  }
+
+  filter.index=index;
+  breadcrumb();
+}
+
+function breadcrumb() {
+  var elements=document.entry_census.elements;
+  for(var ii=0; ii < elements.length; ii++) {
+    if(elements[ii].name=='breadcrumb' && elements[ii].parentNode && elements[ii].parentNode.removeChild) {
+       var test=elements[ii].value;
+       elements[ii].parentNode.removeChild(elements[ii]);
+       ii--;
+    }
+  }
+
+  var breadcrumbs = new Array;
+  var labels = new Array;
+  var filterNodes=getFilters(filters);
+  for(var filterNode in filterNodes) {
+    if(filterNodes[filterNode].index) {
+      var index=filterNodes[filterNode].index;
+      index=index-1;
+      breadcrumbs[index]=filterNodes[filterNode].name;
+      labels[index]=filterNodes[filterNode].label;
+    }
+  }
+  removeFromNavHistory();
+
+  for( var bb=0; bb < breadcrumbs.length ; bb++ ) {
+    var breadcrumb=document.createElement('input');
+    breadcrumb.type='hidden';
+    breadcrumb.name='breadcrumb';
+    breadcrumb.value=breadcrumbs[bb];
+    var label=labels[bb];
+    document.entry_census.appendChild(breadcrumb);
+    addToNavHistoryDiv(label,breadcrumbs[bb]);
+  }
+
+  displayRowCounts(); //just need to call it here...
+}
+
+
+function deactivateComponents(inputName) {
+  var filter=getFilter(inputName,filters);
+  var currentIndex=filter.index;
+  var filterArray=getFilters(filters);
+  for(var ii=0; ii < filterArray.length; ii++) {
+    if(filterArray[ii].index > currentIndex) {
+	   filterArray[ii].index=false;
+	   filterArray[ii].selectedItems = new Array;
+	   element = dojo.byId(filterArray[ii].name);
+	   for(var jj=0; jj < element.options.length;jj++) {
+		  element.options[jj].selected=false;
+	   }
+    } else if (filterArray[ii].index == currentIndex ) {
+      var newIndex=false;
+      var element=dojo.byId(inputName);
+      for(var jj=0; jj < element.options.length;jj++) {
+	     if(element.options[jj].selected) {
+			 newIndex=currentIndex;
+	     }
+      }
+      filterArray[ii].index=newIndex;
+    }
+  }
+}
+
+function getMaxIndex(filter) {
+  var maxIndex=1;
+  var filterNodes=getFilters(filter);
+
+  for(var filter in filterNodes) {
+    if(filterNodes[filter].index >= maxIndex) {
+      maxIndex = filterNodes[filter].index+1;
+    }
+  }
+  return maxIndex;
+}
+
+function createOptions() {
+  var filterNodes=getFilters(filters);
+  ///var element;
+
+  //disable non active menus
+  for(var filter in filterNodes) {
+    if(filterNodes[filter].index == false) {
+       disableInput(filterNodes[filter].name);
+    }
+  }
+  for(var filter in filters) {
+    ///element=dojo.byId(filters[filter].name);
+    createOption(filter);
+  }
+}
+
+function disableInput(inputName) {
+  var element=dojo.byId(inputName);
+  element.disabled=true;
+}
+
+function enableInput(inputName) {
+  var element = dojo.byId(inputName);
+  element.disabled = false;
+}
+
+function enableInputs() {
+  var filterNodes = getFilters(filters);
+
+  for( var filter in filterNodes) {
+    enableInput(filterNodes[filter].name);
+  }
+}
+
+function getSelectedItems(inputName) {
+  return filters[inputName].selectedItems;
+}
+
+function rebuildOption(inputName,filter) {
+  var filterNode  = getFilter(inputName,filter);
+  var order       = filterNode.sortOrder;
+  var params      = new Object;
+  var nodeIndex   = filterNode.index;
+
+  startSpinDiv(filterNode.name); //need?back
+  filterNode.busy = true;
+
+  if(nodeIndex == false) {
+		nodeIndex = getMaxIndex(filter);
+  }
+
+  var myForm=document.entry_census;
+  for(var ii = 0; ii < myForm.elements.length; ii++) {
+		myElement=myForm.elements[ii];
+		params[myElement.name]=new Array;
+  }
+
+  for(var ii = 0; ii < myForm.elements.length; ii++) {
+    myElement = myForm.elements[ii];
+    //console.debug('MY ELEMNETN NAME: '+myElement.name+' TYPE: '+myElement.type+' VALUE: '+myElement.value);
+    if(myElement.type=='hidden') {
+      if(params[myElement.name] ) {
+		params[myElement.name].push(myElement.value);
+      } else {
+		params[myElement.name].push(myElement.value);
+      }
+    }
+  }
+
+  for(var ii=1; ii < nodeIndex; ii++) {
+		paramFilter=getFilterByIndex(ii,filter);
+		params[paramFilter.name]=paramFilter.selectedItems;
+		//for(var tt=0;  tt< params[paramFilter.name].length; tt++){
+            //console.debug('parmaFilter: '+paramFilter.name+' params Items' + params[paramFilter.name][tt]);
+        //}
+  }
+
+  var OBJ = {
+			url: "/get_constraints/"+inputName+"/"+order,
+			handleAs: "json",
+			content: params,
+			sync: false,
+			load: function(data,ioArgs) {
+			  rebuildOptionCallBack(inputName,filter,data);
+			},
+			error: function(data,ioArgs) {
+			  return data;
+			}
+  }
+  dojo.xhrPost(OBJ);
+
+}
+
+function select_all(inputName) {
+  select=dojo.byId(inputName);
+  for(var ii=0; ii < select.options.length; ii++) {
+    select.options[ii].selected=true;
+  }
+  updateInputs(select);
+}
+
+function select_past_n(inputName,past_n) {
+  select=dojo.byId(inputName);
+  for(var ii=0; ii < past_n; ii++) {
+    select.options[ii].selected=true;
+  }
+  updateInputs(select);
+}
+
+function clear_all(inputName) {
+  select=dojo.byId(inputName);
+  for(var ii=0; ii < select.options.length; ii++) {
+    select.options[ii].selected=false;
+  }
+  updateInputs(select);
+}
+
+function rebuildOptionCallBack(inputName,filter,data) {
+  var filterNode=getFilter(inputName,filter);
+  //  console.debug("CreatOptionCallBack "+filterNode.busy+" name "+filter.name);
+  var selectedItems=filterNode.selectedItems;
+  //console.debug("filterNode: "+filterNode.name+"index:" +filterNode.index +" data.length "+ data.length);
+
+  if (data.length>0 ){
+    filterNode.selectedItems=[];
+    select=dojo.byId(inputName);
+    select.length=0;
+    var jj=0;
+    for (var h=0; h < data.length; h++) {
+      if(data[h][1] != null) {
+        var option=document.createElement("option");
+        option.appendChild(document.createTextNode(data[h][0]));
+        option.value=data[h][1];
+        for(var ii=0; ii < selectedItems.length; ii++) {
+          if(option.value==selectedItems[ii]) {
+            option.selected=true;
+            filterNode.selectedItems[jj]=data[h][1];
+            jj++;
+          }
+        }
+        select.appendChild(option);
+      }
+    }
+    var element=dojo.byId(inputName);
+    //console.debug("CHILDDIV: "+ element.options.length);
+    if(element.options.length == 0) {
+      hideDiv(inputName);
+    } else if(element.options.length == 1 && element.options[0].value=='') {
+      hideDiv(inputName);
+    } else {
+      showDiv(inputName);
+    }
+
+  }
+
+  filterNode.busy=false;
+
+  showOptions();
+
+  if(filterNode.children && filterNode.selectedItems.length > 0 ) {
+    for(var child in filterNode.children) {
+      // console.debug("PostAjax child"+filterNode.child+" selectedItems.length "+filterNode.selectedItems.length);
+      var childFilter=getFilter(child,filter);
+      childFilter.visible=true;
+      enableInput(inputName); // necessary to build children.
+      rebuildOption(childFilter.name,filter);
+      //console.debug("do we call "+childFilter+" creatOption("+childFilter.name+")?  if(( "+childFilter.index+" == false && "+childFilter.visible+"==true) || "+childFilter.index+"+1==getMaxIndex(filter) ) {");
+    }
+  } else if (filterNode.children && filterNode.selectedItems.length==0 ) {
+    for(var child in filterNode.children) {
+      var childFilter=getFilter(child,filter);
+      childFilter.visible=false;
+      hideDiv(childFilter.name);
+    }
+  }
+
+}
+
+var rethrowCreateOption=0;//ugly hack - mj
+
+function createOption(inputName){
+  var filter=getFilter(inputName,filters);
+  var order=filter.sortOrder;
+  var div=dojo.byId(inputName+'_div');
+
+  startSpinDiv(filter.name);
+  filter.busy=true;
+
+  if((filter.index == false && filter.visible==true) || filter.index+1==getMaxIndex(filters) ) {
+	var OBJ=
+      {
+		url: "/get_constraints/"+inputName+"/"+order,
+		handleAs: "json",
+		form: "entry_census",
+		sync: false,
+        load: function(data,ioArgs) {
+             if(data.length <= 0) {
+                 hideDiv(inputName); //ugly hack - dp
+             }
+		     createOptionCallBack(inputName,data);
+		},
+		error: function(data,ioArgs)
+		{
+              rethrowCreateOption++;
+              if(rethrowCreateOption < 9) {
+                    createOption(inputName);
+                    return;
+              } else {
+                    alert("can not determine available options: "+inputName);
+                    createOptionCallBack(inputName,data);
+              }
+		}
+      }
+
+    dojo.xhrPost(OBJ);
+
+  } else {
+        data = new Array;
+        createOptionCallBack(inputName,data);
+  }
+}
+
+
+function createOptionCallBack(inputName,data) {
+  var filter = getFilter(inputName,filters);
+  var selectedItems = filter.selectedItems;
+
+  if(data.length > 0 && filter.index == false) {
+    filter.selectedItems=[];
+    select = dojo.byId(inputName);
+    select.length = 0;
+    var jj = 0;
+
+    for (var h = 0; h < data.length; h++) {
+      var option=document.createElement("option");
+      if(data[h][1] != null) {
+		option.appendChild(document.createTextNode(data[h][0]));
+		option.value=data[h][1];
+		for(var ii = 0; ii < selectedItems.length; ii++) {
+		  if(option.value == selectedItems[ii]) {
+			option.selected = true;
+			filter.selectedItems[jj] = data[h][1];
+			jj++;
+		  }
+		}
+		select.appendChild(option);
+      }
+    }
+
+    var element=dojo.byId(inputName);
+
+	if(element.options.length == 0) {
+      hideDiv(inputName);
+    } else if(element.options.length == 1 && (element.options[0].value=='' || element.options[0].value=='null' )) {
+	  hideDiv(inputName);
+    } else {
+      showDiv(inputName);
+    }
+  }
+
+  filter.busy=false;
+
+  showOptions();
+
+  if(filter.children && filter.selectedItems.length > 0 ) {
+    for(var child in filter.children) {
+      var childFilter=getFilter(child,filters);
+      childFilter.visible=true;
+      enableInput(inputName); // necessary to build children.
+      createOption(childFilter.name);
+    }
+  } else if(filter.children && filter.selectedItems.length==0 ) {
+    for(var child in filter.children) {
+      var childFilter = getFilter(child,filters);
+      childFilter.visible=false;
+      hideDiv(childFilter.name);
+
+      if(childFilter.children){
+         for( var grandchild in childFilter.children) {
+		     var grandchildFilter = getFilter(grandchild, filters);
+			 hideDiv(grandchildFilter.name)
+		 }
+	  }
+    }
+  }
+
+  ////displayRowCounts(); // it was already called in showOptions()
+
+  return 1;
+}
+
+function showOptions() {
+  filterArray=getFilters(filters);
+  var enableFlag=1;
+
+  for(var ii=0;ii< filterArray.length; ii++) {
+    var filterNode=filterArray[ii];
+    //console.debug("filterNode: "+filterNode+"busy? "+filterNode.busy+" name "+filterNode.name);
+    if(filterNode.busy) {
+      enableFlag=0;
+    }
+  }
+  if(enableFlag) {
+    for(var ii=0;ii< filterArray.length; ii++) {
+      var filterNode=filterArray[ii];
+      //console.debug("visble? "+filterNode.busy+" name "+filterNode.name);
+      //if(filterNode.visible) {
+      enableInput(filterNode.name);
+      stopSpinDiv(filterNode.name);
+    }
+
+    displayRowCounts();
+  }
+}
+
+
+function startSpinDiv(name) {
+      var div=dojo.byId(name);
+      var spin=dojo.byId(name+'_spinner');
+
+     // dojo.fx.chain([
+      //dojo.fx.combine([
+//		       dojo.fadeOut({node:div.id, delay:100,duration:500,onEnd:function(){spin.style.display='';} }),
+//		       dojo.fadeIn({node:spin.id, delay:100,duration:500})
+//		       ]).play();
+}
+
+
+function hideSpinner(divId) {
+//  var div=dojo.byId(divId);
+//      dojo.fadeOut({node:div.id, delay:100, duration:500, onEnd: function(){div.style.display='none';}
+//		   }).play();
+}
+
+
+function showSpinner(divId) {
+ // var div=dojo.byId(divId);
+ //     div.style.display='';
+ //     dojo.fadeIn({node:div.id, delay:100, duration:500,
+ //                  onEnd: function(){
+ //                                     // div.style.visibility=true;
+ //                                 }
+ //    	          }).play();
+}
+
+
+function stopSpinDiv(name) {
+//  var div=dojo.byId(name);
+//  var spin=dojo.byId(name+'_spinner');
+//   dojo.fx.combine([
+//		    dojo.fadeOut({node:spin.id, delay:100,duration:500,onEnd:function() {spin.style.display='none';} }),
+//		    dojo.fadeIn({node:div.id, delay:100,duration:500})
+//		    ]).play();
+}
+
+
+function showDiv(name) {
+  var div=dojo.byId(name+'_div');
+
+  div.style.display='';
+  dojo.fadeIn({node:div.id, delay:100, duration:1000, onEnd: function(){div.style.display='';}
+    	          }).play();
+}
+
+
+function hideDiv(name) {
+  var div=dojo.byId(name+'_div');
+
+  dojo.fadeOut({ node:div.id, delay:300, duration:2000, onEnd:function(){div.style.display='none';}
+		       }).play();
+}
+
+
+function spinner(state){
+  var dv=document.getElementById('spinner');
+  if (state=='show'){
+    dv.style.visibility="visible";
+  }else{
+    dv.style.visibility="hidden";
+  }
+}
+
+
+function getFilter(inputName,filterNode){
+  for(filter in filterNode) {
+    if(filter == inputName) {
+      //alert("found filter returning "+ filterNode[filter] + "..." + inputName);
+      return filterNode[filter];
+    } else if (filterNode[filter].children) {
+		filter=getFilter(inputName,filterNode[filter].children);
+		if(filter==false) {
+	      //next node;
+		} else {
+		   return filter;
+		}
+    }
+  }
+  return false;
+}
+
+
+function getFilters(filterNode){
+  var filterArray=new Array;
+  var jj=0;
+  for(filter in filterNode) {
+    filterArray.push(filterNode[filter]);
+    if(filterNode[filter].children != false) {
+
+      childArray=getFilters(filterNode[filter].children);
+      for(var ii=0; ii < childArray.length; ii++) {
+	filterArray.push(childArray[ii]);
+      }
+    }
+  }
+  return filterArray;
+}
+
+function getFilterByIndex(index,filterNode) {
+
+  for(filter in filterNode) {
+    if(filterNode[filter].index == index) {
+      return filterNode[filter];
+    } else if (filterNode[filter].children) {
+      filter=getFilterByIndex(index,filterNode[filter].children);
+      if(filter==false) {
+        //next node;
+      } else {
+        return filter;
+      }
+    }
+
+  }
+  return false;
+}
+
+function saveQuery(){
+      alert(uuid);
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+
+function loadSubmit(_uuid, ioArgs){
+	parent.location.hash =_uuid;
+	document.location.href ='/results/'+_uuid;
+}
+
+function loadError(response, ioArgs) {
+	alert(response);
+}
+
+function onSubmit() {
+     var rowcount;
+     dojo.xhrPost( {
+                      url: '/row_counts',
+                      form: "entry_census",
+                      timeout: 500000,
+                      handleAs: "json",
+                      load: function(response, ioArgs) {
+                      ;
+                       if (response.rowcnt <= 50000 ){
+                         dojo.xhrPost( {
+				             url: '/uuid/encode',
+				             form: "entry_census",
+				             timeout: 500000,
+				             handleAs: "json",
+				             load: loadSubmit,
+				             error: loadError
+				         } );
+                       }
+                     }
+                 });
+}
+
+
+function addToNavHistoryDiv(field,name){
+	var div = document.getElementById('NavHistoryDiv');
+	var dvCount=div.getElementsByTagName("div").length;
+	if (dojo.query("[name='nvName_"+field+"']").length > 0){
+		return 1;
+	}
+	txtDiv = document.createElement('div');
+	newlink = document.createElement('a');
+ 	tn = document.createTextNode(field);
+ 	newlink.appendChild(tn);
+	var ndvCount=dvCount+1;
+ 	newlink.setAttribute('href', "javascript:updateInputs(dojo.byId('"+name+"'));");
+	//newlink.setAttribute('href', "javascript:tester();");
+ 	arrow = document.createTextNode("->");
+
+	txtDiv.setAttribute('id','nvTxt_'+dvCount);
+	txtDiv.setAttribute('name','nvName_'+field);
+    txtDiv.className='nav';
+	if (dvCount != 0){
+		txtDiv.appendChild(arrow);
+	}
+	txtDiv.appendChild(newlink);
+	div.appendChild(txtDiv);
+
+}
+
+function removeFromNavHistory(){
+	var navDiv=document.getElementById("NavHistoryDiv");
+	while( navDiv.hasChildNodes() ) { navDiv.removeChild( navDiv.lastChild ); }
+
+}
+
+
+// Display row number on index page
+function displayRowCounts() {
+
+    dojo.xhrPost( {
+				    url: "/row_counts",
+				    form: "entry_census",
+				    timeout: 500000,
+				    handleAs: "json",
+                    load: function(response, ioArgs) {
+                          var rowcnt=addCommas(response.rowcnt);
+                          var totalrowcnt=addCommas(response.totalrowcnt);
+                          var stausColor;
+                          var statusMsg;
+                          var toolMsgTxt
+
+                          if(response.rowcnt ==  response.totalrowcnt ) {
+                          var statusMsg= rowcnt+' records.';
+                            rowCntMsg="Select one or more items to filter records. There are currently "+totalrowcnt+" records available.";
+                            statusColor='red';
+                            toolMsgTxt= " Selected items filter to "+ rowcnt + " of " + totalrowcnt + " total records";
+                          }else if( response.rowcnt > 50000 ){
+                            statusColor='red';
+                            statusMsg=rowcnt+' records';
+                            toolMsgTxt=" Selected items filter to "+ rowcnt + " of " + totalrowcnt +". Only "+addCommas( 50000)+" records can be returned at a time.";
+                            rowCntMsg=toolMsgTxt;
+                           }else if(response.rowcnt == 0){
+                            statusColor='red';
+                            statusMsg=rowcnt+' records';
+                            toolMsgTxt="  "+ rowcnt + " of " +totalrowcnt+" Please click Clear to reset.";
+                            rowCntMsg=toolMsgTxt;
+                          }else {
+                           statusMsg= rowcnt+' records.';
+                           statusColor='green';
+                           toolMsgTxt= " Selected items filter to "+ rowcnt + " of " + totalrowcnt + " total records. Press Get Data button below to retrieve records.";
+                           rowCntMsg=toolMsgTxt;
+                          }
+                          dijit.byId('getDataTooltip').attr('label',toolMsgTxt);
+                          document.getElementById("rCounts").innerHTML=rowCntMsg;
+                          document.getElementById("status_go").style.color=statusColor;
+                          document.getElementById("status_go").innerHTML=statusMsg;
+
+                    },
+
+                    error: function(response, ioArgs) {
+	                       return response;
+	                }
+
+				 } );
+
+}
+
+
+// return true if page is current url
+function getPage(page) {
+   var currentPage = location.href;
+   var pattern=new RegExp(page,"gi");
+   if(currentPage.match(pattern)) {
+       return true;
+   }
+}
+
+
+function submitSearch(){
+  startSpinDiv('search_text');
+  var thisForm=document.forms.search_form;
+
+  dojo.xhrPost( {
+                    url: '/uuid/encode',
+                    form: "search_form",
+                    sync: true,
+                    timeout: 500000,
+                    handleAs: "json",
+                    load: function loadSearch(_uuid, ioArgs){
+                      thisForm.action=document.location.href+_uuid;
+                      //displayRowCounts() ; // why call it here again?
+                    },
+
+                    error: loadError
+                 } );
+}
+
+
+function addCommas(nStr){
+    nStr += '';
+    x = nStr.split('.');
+    x1 = x[0];
+    x2 = x.length > 1 ? '.' + x[1] : '';
+    var rgx = /(\d+)(\d{3})/;
+    while (rgx.test(x1)) {
+        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    }
+    return x1 + x2;
+}
+
+
+
+
+
+
+//=====================================================
+//============== debug/test ===========================
+//=====================================================
+
+function toggleHelp(helpDiv) {
+var div=document.getElementById(helpDiv);
+  if (div.style.display=='block'){
+    div.style.display='none';
+  }else {
+    div.style.display='block';
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+import json
+import xlwt
+import csv
+import codecs
+import requests
+import os
+import urllib.request
+
+tempUrl = input("Enter url:-")
+temp2 = "&format=csv"
+tempUrl + temp2
+print (tempUrl + temp2)
+tempFileName = input("Enter filename:-")
+with urllib.request.urlopen(tempUrl+temp2) as url:
+    data = url.read()
+
+print(data)
+
+data1 = json.loads(data.decode('UTF-8'))
+
+print(data1)
+
+tempData = data1['data']
+
+filename = "C:/tmp/" + tempFileName + ".csv"
+os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+final = open(filename, 'w')
+
+csvwriter = csv.writer(final)
+
+count = 0
+
+for emp in tempData:
+    if count == 0:
+        header = emp.keys()
+        csvwriter.writerow(header)
+        count += 1
+    csvwriter.writerow(emp.values())
+
+final.close()
